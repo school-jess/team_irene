@@ -1,4 +1,4 @@
-using team_irene2.models; 
+using team_irene2.models;
 
 class Program
 {
@@ -23,7 +23,7 @@ class Program
         // Get birthdate and calculate age of the user
         Console.Write("Enter Birthdate (yyyy-MM-dd): ");
         model.birthDay = Console.ReadLine();
-        
+
 
         Console.WriteLine($"Age: {model.age}");
 
