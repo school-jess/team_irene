@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace team_irene2.models
 {
-    internal class irene
+    public class irene
     {
     }
 }
