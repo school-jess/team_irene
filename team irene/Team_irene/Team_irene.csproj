@@ -9,6 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../team irene2/team irene2.csproj"/>
+    <ProjectReference Include="../team_irene2/team_irene2.csproj"/>
   </ItemGroup>
 </Project>
