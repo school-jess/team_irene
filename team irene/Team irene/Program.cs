@@ -1,64 +1,56 @@
-﻿using System;
+﻿using team_irene2.models;
 
 class Program
 {
     static void Main()
     {
+        irene model = new irene();
         // Get user details
         Console.Write("Enter First Name: ");
-        string firstName = Console.ReadLine();
+        model.firstName = Console.ReadLine();
 
         Console.Write("Enter Last Name: ");
-        string lastName = Console.ReadLine();
+        model.lastName = Console.ReadLine();
 
         Console.Write("Enter Middle Initial (Optional): ");
-        string middleInitial = Console.ReadLine();
+        model.middleInitial = Console.ReadLine();
 
         Console.Write("Enter Suffix (Optional): ");
-        string suffix = Console.ReadLine();
+        model.suffix = Console.ReadLine();
 
-        string fullName = $"{firstName} {lastName} {middleInitial} {suffix}";
-        Console.WriteLine($"Full Name: {fullName}");
+        Console.WriteLine($"Full Name: {model.fullName}");
 
         // Get birthdate and calculate age of the user
         Console.Write("Enter Birthdate (yyyy-MM-dd): ");
-        DateTime birthDate;
-
-        while (!DateTime.TryParse(Console.ReadLine(), out birthDate))
-        {
+        try {
+            model.birthDay = Convert.ToDateTime(Console.ReadLine());
+        } catch {
             Console.Write("Invalid date format. Please enter again (yyyy-MM-dd): ");
         }
 
-        int age = DateTime.Now.Year - birthDate.Year;
-        if (DateTime.Now < birthDate.AddYears(age))
-        {
-            age--; // Adjust if birthday hasn't occurred this year yet
-        }
-
-        Console.WriteLine($"Age: {age}");
+        Console.WriteLine($"Age: {model.age}");
 
         // Get address details of the user
         Console.Write("Enter House No.: ");
-        string houseNo = Console.ReadLine();
+        model.houseNumber = Console.ReadLine();
 
         Console.Write("Enter Street: ");
-        string street = Console.ReadLine();
+        model.street = Console.ReadLine();
 
         Console.Write("Enter Barangay: ");
-        string barangay = Console.ReadLine();
+        model.barangay = Console.ReadLine();
 
         Console.Write("Enter Municipality: ");
-        string municipality = Console.ReadLine();
+        model.province = Console.ReadLine();
 
         Console.Write("Enter City: ");
-        string city = Console.ReadLine();
+        model.city = Console.ReadLine();
 
         Console.Write("Enter Country: ");
-        string country = Console.ReadLine();
+        model.country = Console.ReadLine();
 
         // Format and display the final address
-        string finalAddress = $"{houseNo}, {street}, {barangay}, {municipality}, {city}, {country}";
         Console.WriteLine("\nFinal Address:");
-        Console.WriteLine(finalAddress);
+        Console.WriteLine(model.address);
     }
 }
