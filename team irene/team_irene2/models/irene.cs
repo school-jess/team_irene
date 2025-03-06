@@ -7,19 +7,19 @@ namespace team_irene2.models
             get
             {
                 string fullNameToRet = "";
-                fullNameToRet += $"{Capitalize(firstName)} ";
+                fullNameToRet += $"{Capitalize(_firstName)} ";
                 if (middleInitial != "")
                 {
                     fullNameToRet += $"{middleInitial.ToUpper()}. ";
                 }
                 if (suffix != "")
                 {
-                    fullNameToRet += $"{Capitalize(lastName)} ";
+                    fullNameToRet += $"{Capitalize(_lastName)} ";
                     fullNameToRet += suffix;
                 }
                 else
                 {
-                    fullNameToRet += Capitalize(lastName);
+                    fullNameToRet += Capitalize(_lastName);
                 }
                 return fullNameToRet;
             }
@@ -29,8 +29,8 @@ namespace team_irene2.models
         {
             get
             {
-                int age_shadow = DateTime.Now.Year - __birthDay.Year;
-                if (DateTime.Now < __birthDay.AddYears(age_shadow))
+                int age_shadow = DateTime.Now.Year - _birthDay.Year;
+                if (DateTime.Now < _birthDay.AddYears(age_shadow))
                 {
                     age_shadow--; // Adjust if birthday hasn't occurred this year yet
                 }
@@ -41,42 +41,47 @@ namespace team_irene2.models
         {
             get
             {
-                return $"{houseNumber} {street}, {barangay}, {city}, {province}, {country}";
+                return $"{_houseNumber} {_street}, {_barangay}, {_city}, {_province}, {_country}";
             }
         }
 
         public string firstName
         {
-            get => firstName; set
+            get => _firstName; set
             {
                 if (value == "")
                 {
                     throw new Exception("Must provide first name input");
                 }
-                firstName = value;
+                _firstName = value;
             }
         }
-        public string? middleInitial { get; set; }
+        private string _firstName {get; set;}
+
+        public string middleInitial { get; set; }
+
         public string lastName
         {
-            get => lastName; set
+            get => _lastName; set
             {
                 if (value == "")
                 {
                     throw new Exception("Must provide last name input");
                 }
-                lastName = value;
+                _lastName = value;
             }
         }
-        public string? suffix { get; set; }
+        public string _lastName { get; set; }
+
+        public string suffix { get; set; }
 
         public string birthDay
         {
-            get => birthDay; set
+            get => _birthDay.ToString(); set
             {
                 try
                 {
-                    __birthDay = Convert.ToDateTime(value);
+                    _birthDay = Convert.ToDateTime(value);
                 }
                 catch (Exception e)
                 {
@@ -84,76 +89,87 @@ namespace team_irene2.models
                 }
             }
         }
-        public DateTime __birthDay { get; set; }
+        public DateTime _birthDay { get; set; }
 
         public string houseNumber
         {
-            get => houseNumber; set
+            get => _houseNumber; set
             {
-                if (houseNumber == "")
+                if (value == "")
                 {
                     throw new Exception("Must provide house number input");
                 }
-                houseNumber = value;
+                _houseNumber = value;
             }
         }
+        private string _houseNumber { get; set; }
+
         public string street
         {
-            get => street; set
+            get => _street; set
             {
                 if (value == "")
                 {
                     throw new Exception("Must provide street input");
                 }
-                street = value;
+                _street = value;
             }
         }
+        private string _street { get; set; }
+
         public string barangay
         {
-            get => barangay;
+            get => _barangay;
             set
             {
                 if (value == "")
                 {
                     throw new Exception("Must provide barangay input");
                 }
-                barangay = value;
+                _barangay = value;
             }
         }
+        private string _barangay {get; set;}
+
         public string province
         {
-            get => province;
+            get => ;
             set
             {
                 if (value == "")
                 {
                     throw new Exception("Must provide province input");
                 }
-                province = value;
+                _province = value;
             }
         }
+        private string _province {get; set;}
+
         public string city
         {
-            get => city; set
+            get => _city; set
             {
                 if (value == "")
                 {
                     throw new Exception("Must provide city input");
                 }
-                city = value;
+                _city = value;
             }
         }
+        private string _city {get; set;}
+
         public string country
         {
-            get => country; set
+            get => _country; set
             {
                 if (value == "")
                 {
                     throw new Exception("Must provide country input");
                 }
-                country = value;
+                _country = value;
             }
         }
+        private string _country {get; set;}
 
         private static string Capitalize(string stringToRet)
         {
