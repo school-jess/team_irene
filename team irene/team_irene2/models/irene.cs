@@ -1,4 +1,4 @@
-﻿namespace team_irene2.models
+namespace team_irene2.models
 {
     public class irene
     {
@@ -19,8 +19,8 @@
 
         public int age {
             get {
-                int age_shadow = DateTime.Now.Year - birthDay.Year;
-                if (DateTime.Now < birthDay.AddYears(age_shadow))
+                int age_shadow = DateTime.Now.Year - __birthDay.Year;
+                if (DateTime.Now < __birthDay.AddYears(age_shadow))
                 {
                     age_shadow--; // Adjust if birthday hasn't occurred this year yet
                 }
@@ -36,7 +36,14 @@
         public string lastName {get; set;}
         public string suffix {get; set;}
 
-        public DateTime birthDay {get; set;}
+        public string birthDay {get=>birthDay; set {
+            try {
+                __birthDay = Convert.ToDateTime(value);
+            } catch (Exception e) {
+                throw new Exception(e.Message);
+            }
+        }}
+        public DateTime __birthDay {get; set;}
 
         public string houseNumber {get; set;}
         public string street {get; set;}

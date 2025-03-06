@@ -8,6 +8,7 @@ public class UnitTest1
     [TestMethod]
     public void TestInvalidBirthday()
     {
-        
+        irene model = new irene();
+        Assert.ThrowsException<Exception>(() => model.birthDay = "03-30-2005");
     }
 }
