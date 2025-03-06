@@ -11,16 +11,16 @@ class Program
         Console.Write("Enter Last Name: ");
         string lastName = Console.ReadLine();
 
-        Console.Write("Enter Middle Initial: (optional)");
+        Console.Write("Enter Middle Initial (Optional): ");
         string middleInitial = Console.ReadLine();
 
-        Console.Write("Enter Suffix: (optional)");
+        Console.Write("Enter Suffix (Optional): ");
         string suffix = Console.ReadLine();
 
         string fullName = $"{firstName} {lastName} {middleInitial} {suffix}";
         Console.WriteLine($"Full Name: {fullName}");
 
-        // Get birthdate and calculate age
+        // Get birthdate and calculate age of the user
         Console.Write("Enter Birthdate (yyyy-MM-dd): ");
         DateTime birthDate;
 
@@ -37,7 +37,7 @@ class Program
 
         Console.WriteLine($"Age: {age}");
 
-        // Get address details
+        // Get address details of the user
         Console.Write("Enter House No.: ");
         string houseNo = Console.ReadLine();
 
