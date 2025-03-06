@@ -10,11 +10,24 @@
         "runtime": {
           "Team irene.dll": {}
         }
+      },
+      "team irene2/1.0.0": {
+        "runtime": {
+          "team irene2.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
       }
     }
   },
   "libraries": {
     "Team irene/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "team irene2/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

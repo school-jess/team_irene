@@ -1,28 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\krylle\\team_irene\\team irene\\team irene2\\team irene2.csproj": {}
+    "C:\\Users\\User\\Desktop\\college\\jessevangelista\\2ndsem\\team_irene\\team irene\\team irene2\\team irene2.csproj": {}
   },
   "projects": {
-    "C:\\Users\\krylle\\team_irene\\team irene\\team irene2\\team irene2.csproj": {
+    "C:\\Users\\User\\Desktop\\college\\jessevangelista\\2ndsem\\team_irene\\team irene\\team irene2\\team irene2.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\krylle\\team_irene\\team irene\\team irene2\\team irene2.csproj",
+        "projectUniqueName": "C:\\Users\\User\\Desktop\\college\\jessevangelista\\2ndsem\\team_irene\\team irene\\team irene2\\team irene2.csproj",
         "projectName": "team irene2",
-        "projectPath": "C:\\Users\\krylle\\team_irene\\team irene\\team irene2\\team irene2.csproj",
-        "packagesPath": "C:\\Users\\krylle\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\krylle\\team_irene\\team irene\\team irene2\\obj\\",
+        "projectPath": "C:\\Users\\User\\Desktop\\college\\jessevangelista\\2ndsem\\team_irene\\team irene\\team irene2\\team irene2.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\User\\Desktop\\college\\jessevangelista\\2ndsem\\team_irene\\team irene\\team irene2\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\krylle\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -61,7 +58,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Users\\User\\AppData\\Local\\Microsoft\\dotnet\\sdk\\8.0.405/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

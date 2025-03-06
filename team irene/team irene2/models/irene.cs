@@ -3,12 +3,30 @@
     public class irene
     {
         public string fullName {get {
-            return $"{firstName} {middleInitial} {lastName}";
+            string fullNameToRet = "";
+            fullNameToRet += $"{Capitalize(firstName)} ";
+            if (middleInitial != "") {
+                fullNameToRet += $"{middleInitial.ToUpper()}. ";
+            }
+            if (suffix != "") {
+                fullNameToRet += $"{Capitalize(lastName)} ";
+                fullNameToRet += suffix;
+            } else {
+                fullNameToRet += Capitalize(lastName);
+            }
+            return fullNameToRet;
         }}
 
-        public int age {get {
-            return 
-        }}
+        public int age {
+            get {
+                int age_shadow = DateTime.Now.Year - birthDay.Year;
+                if (DateTime.Now < birthDay.AddYears(age_shadow))
+                {
+                    age_shadow--; // Adjust if birthday hasn't occurred this year yet
+                }
+                return age_shadow;
+            }
+        }
         public string address {get {
             return $"{houseNumber} {street}, {barangay}, {city}, {province}, {country}";
         }}
@@ -18,7 +36,7 @@
         public string lastName {get; set;}
         public string suffix {get; set;}
 
-        public string birthDay {get; set;}
+        public DateTime birthDay {get; set;}
 
         public string houseNumber {get; set;}
         public string street {get; set;}
@@ -26,5 +44,9 @@
         public string province {get; set;}
         public string city {get; set;}
         public string country {get; set;}
+
+        private static string Capitalize(string stringToRet) {
+            return $"{stringToRet[0].ToString().ToUpper()}{stringToRet[1..]}";
+        }
     }
 }
