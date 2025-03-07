@@ -160,7 +160,7 @@ namespace team_irene2.models
                 {
                     throw new Exception("Must provide province input");
                 }
-                _country = value;
+                _province = value;
             }
         }
         private string _province { get; set; }
@@ -172,6 +172,7 @@ namespace team_irene2.models
                 {
                     throw new Exception("Must provide country input");
                 }
+                _country = value;
             }
         }
         private string _country { get; set; }

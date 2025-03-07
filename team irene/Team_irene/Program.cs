@@ -38,11 +38,11 @@ class Program
             Console.Write("Enter Barangay: ");
             model.barangay = Console.ReadLine();
 
-            Console.Write("Enter Municipality: ");
-            model.province = Console.ReadLine();
-
             Console.Write("Enter City: ");
             model.city = Console.ReadLine();
+
+            Console.Write("Enter Municipality: ");
+            model.province = Console.ReadLine();
 
             Console.Write("Enter Country: ");
             model.country = Console.ReadLine();
