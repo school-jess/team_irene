@@ -1,12 +1,17 @@
 using team_irene2.models;
+using MySql.Data.MySqlClient;
+using DotNetEnv;
 
 class Program
 {
     static void Main()
     {
+        Env.Load();
         irene model = new irene();
+        MySqlConnection conn = new MySqlConnection($"Server=localhost; database=first_database; user=root; password={Env.GetString("MYSQL_ROOT_PASSWORD")};");
         try
         {
+            conn.Open();
             // Get user details
             Console.Write("Enter First Name: ");
             model.firstName = Console.ReadLine();
@@ -55,5 +60,6 @@ class Program
         // Format and display the final address
         Console.WriteLine("\nFinal Address:");
         Console.WriteLine(model.address);
+        conn.Close();
     }
 }
