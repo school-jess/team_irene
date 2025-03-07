@@ -79,6 +79,10 @@ namespace team_irene2.models
         {
             get => _birthDay.ToString(); set
             {
+                if (value == "")
+                {
+                    throw new Exception("Must provide birthday input");
+                }
                 string format = "yyyy-MM-dd";
                 try
                 {
@@ -171,6 +175,7 @@ namespace team_irene2.models
             }
         }
         private string _country { get; set; }
+
         private static string Capitalize(string stringToRet)
         {
             return $"{stringToRet[0].ToString().ToUpper()}{stringToRet[1..]}";
