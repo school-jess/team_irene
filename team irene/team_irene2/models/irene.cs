@@ -56,7 +56,7 @@ namespace team_irene2.models
                 _firstName = value;
             }
         }
-        private string _firstName {get; set;}
+        private string _firstName { get; set; }
 
         public string middleInitial { get; set; }
 
@@ -79,9 +79,10 @@ namespace team_irene2.models
         {
             get => _birthDay.ToString(); set
             {
+                string format = "yyyy-MM-dd";
                 try
                 {
-                    _birthDay = Convert.ToDateTime(value);
+                    _birthDay = DateTime.ParseExact(value, format, System.Globalization.CultureInfo.InvariantCulture);
                 }
                 catch (Exception e)
                 {
@@ -129,35 +130,36 @@ namespace team_irene2.models
                 _barangay = value;
             }
         }
-        private string _barangay {get; set;}
+        private string _barangay { get; set; }
+
+        public string city
+        {
+            get => _city;
+            set
+            {
+                if (value == "")
+                {
+                    throw new Exception("Must provide barangay input");
+                }
+                _city = value;
+            }
+        }
+        private string _city { get; set; }
 
         public string province
         {
-            get => ;
+            get => _province;
+
             set
             {
                 if (value == "")
                 {
                     throw new Exception("Must provide province input");
                 }
-                _province = value;
+                _country = value;
             }
         }
-        private string _province {get; set;}
-
-        public string city
-        {
-            get => _city; set
-            {
-                if (value == "")
-                {
-                    throw new Exception("Must provide city input");
-                }
-                _city = value;
-            }
-        }
-        private string _city {get; set;}
-
+        private string _province { get; set; }
         public string country
         {
             get => _country; set
@@ -166,14 +168,14 @@ namespace team_irene2.models
                 {
                     throw new Exception("Must provide country input");
                 }
-                _country = value;
             }
         }
-        private string _country {get; set;}
-
+        private string _country { get; set; }
         private static string Capitalize(string stringToRet)
         {
             return $"{stringToRet[0].ToString().ToUpper()}{stringToRet[1..]}";
         }
     }
 }
+
+
