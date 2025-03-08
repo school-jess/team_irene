@@ -77,7 +77,7 @@ namespace team_irene2.models
 
         public string birthDay
         {
-            get => _birthDay.ToString(); set
+            get => _birthDay.ToString("yyyy-MM-dd"); set
             {
                 if (value == "")
                 {
