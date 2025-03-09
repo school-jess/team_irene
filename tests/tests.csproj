@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\team_irene2\team_irene2.csproj" />
+    <ProjectReference Include="..\basic_information_library\basic_information_library.csproj" />
   </ItemGroup>
 
 </Project>

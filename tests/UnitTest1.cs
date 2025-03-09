@@ -1,4 +1,4 @@
-using team_irene2.models;
+using basic_information_library.models;
 
 namespace Tests;
 
@@ -8,119 +8,126 @@ public class UnitTest1
     [TestMethod]
     public void TestInvalidBirthday()
     {
-        irene model = new irene();
+        BasicInformation model = new BasicInformation();
         Assert.ThrowsException<Exception>(() => model.birthDay = "03-30-2005");
     }
 
     [TestMethod]
     public void TestNoFirstName()
     {
-        irene model = new irene();
+        BasicInformation model = new BasicInformation();
         Assert.ThrowsException<Exception>(() => model.firstName = "");
     }
 
     [TestMethod]
     public void TestNoLastName()
     {
-        irene model = new irene();
+        BasicInformation model = new BasicInformation();
         Assert.ThrowsException<Exception>(() => model.lastName = "");
     }
 
     [TestMethod]
     public void TestNoBirthday()
     {
-        irene model = new irene();
+        BasicInformation model = new BasicInformation();
         Assert.ThrowsException<Exception>(() => model.birthDay = "");
     }
 
     [TestMethod]
     public void TestNoHouseNumber()
     {
-        irene model = new irene();
+        BasicInformation model = new BasicInformation();
         Assert.ThrowsException<Exception>(() => model.houseNumber = "");
     }
 
     [TestMethod]
     public void TestNoStreet()
     {
-        irene model = new irene();
+        BasicInformation model = new BasicInformation();
         Assert.ThrowsException<Exception>(() => model.street = "");
     }
 
     [TestMethod]
     public void TestNoBarangay()
     {
-        irene model = new irene();
+        BasicInformation model = new BasicInformation();
         Assert.ThrowsException<Exception>(() => model.barangay = "");
     }
 
     [TestMethod]
     public void TestNoCity()
     {
-        irene model = new irene();
+        BasicInformation model = new BasicInformation();
         Assert.ThrowsException<Exception>(() => model.city = "");
     }
 
     [TestMethod]
     public void TestNoProvince()
     {
-        irene model = new irene();
+        BasicInformation model = new BasicInformation();
         Assert.ThrowsException<Exception>(() => model.province = "");
     }
 
     [TestMethod]
     public void TestNoCountry()
     {
-        irene model = new irene();
+        BasicInformation model = new BasicInformation();
         Assert.ThrowsException<Exception>(() => model.country = "");
     }
 
     [TestMethod]
     public void TestNumberInFirstName()
     {
-        irene model = new irene();
-        // Assert.ThrowsException<Exception>(() => model.firstName = "");
+        BasicInformation model = new BasicInformation();
+        Console.WriteLine("todo");
+        Assert.Fail();
     }
 
     [TestMethod]
     public void TestNumberInLastName()
     {
-        irene model = new irene();
-        // Assert.ThrowsException<Exception>(() => model.lastName = "");
+        BasicInformation model = new BasicInformation();
+        Console.WriteLine("todo");
+        Assert.Fail();
     }
 
     [TestMethod]
     public void TestNumberInStreet()
     {
-        irene model = new irene();
-        // Assert.ThrowsException<Exception>(() => model.street = "");
+        BasicInformation model = new BasicInformation();
+        Console.WriteLine("todo");
+        Assert.Fail();
     }
 
     [TestMethod]
     public void TestNumberInBarangay()
     {
-        irene model = new irene();
-        // Assert.ThrowsException<Exception>(() => model.barangay = "");
+        BasicInformation model = new BasicInformation();
+        Console.WriteLine("todo");
+        Assert.Fail();
     }
 
     [TestMethod]
     public void TestNumberInCity()
     {
-        irene model = new irene();
-        // Assert.ThrowsException<Exception>(() => model.city = "");
+        BasicInformation model = new BasicInformation();
+        Console.WriteLine("todo");
+        Assert.Fail();
     }
 
     [TestMethod]
     public void TestNumberInProvince()
     {
-        irene model = new irene();
-        // Assert.ThrowsException<Exception>(() => model.province = "");
+        BasicInformation model = new BasicInformation();
+        Console.WriteLine("todo");
+        Assert.Fail();
     }
 
     [TestMethod]
     public void TestNumberInCountry()
     {
-        irene model = new irene();
-        // Assert.ThrowsException<Exception>(() => model.country = "");
+        BasicInformation model = new BasicInformation();
+        Console.WriteLine("todo");
+        Assert.Fail();
     }
 }

@@ -1,6 +1,6 @@
-namespace team_irene2.models
+namespace basic_information_library.models
 {
-    public class irene
+    public class BasicInformation
     {
         public string fullName
         {

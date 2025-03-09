@@ -3,17 +3,12 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
-    <RootNamespace>Team_irene</RootNamespace>
+    <RootNamespace>basic_information_consumer</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../team_irene2/team_irene2.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="DotNetEnv" Version="3.1.1" />
-    <PackageReference Include="MySql.Data" Version="9.2.0" />
+    <ProjectReference Include="../basic_information_library/basic_information_library.csproj" />
   </ItemGroup>
 </Project>
