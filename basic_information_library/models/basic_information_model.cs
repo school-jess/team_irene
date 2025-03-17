@@ -7,19 +7,19 @@ namespace basic_information_library.models
             get
             {
                 string fullNameToRet = "";
-                fullNameToRet += $"{Capitalize(_firstName)} ";
+                fullNameToRet += $"{_firstName} ";
                 if (_middleInitial != "")
                 {
                     fullNameToRet += $"{_middleInitial.ToUpper()}. ";
                 }
                 if (_suffix != "")
                 {
-                    fullNameToRet += $"{Capitalize(_lastName)} ";
+                    fullNameToRet += $"{_lastName} ";
                     fullNameToRet += _suffix;
                 }
                 else
                 {
-                    fullNameToRet += Capitalize(_lastName);
+                    fullNameToRet += _lastName;
                 }
                 return fullNameToRet;
             }
@@ -57,7 +57,7 @@ namespace basic_information_library.models
                 {
                     throw new Exception("Number inside of first name");
                 }
-                _firstName = value;
+                _firstName = Capitalize(value);
             }
         }
         private string _firstName { get; set; }
@@ -70,7 +70,7 @@ namespace basic_information_library.models
                 {
                     throw new Exception("Number inside of middle initial");
                 }
-                _middleInitial = value;
+                _middleInitial = Capitalize(value);
             }
         }
 
@@ -88,7 +88,7 @@ namespace basic_information_library.models
                 {
                     throw new Exception("Number inside of last name");
                 }
-                _lastName = value;
+                _lastName = Capitalize(value);
             }
         }
         public string _lastName { get; set; }
@@ -146,7 +146,7 @@ namespace basic_information_library.models
                 {
                     throw new Exception("Number inside of street");
                 }
-                _street = value;
+                _street = Capitalize(value);
             }
         }
         private string _street { get; set; }
@@ -164,7 +164,7 @@ namespace basic_information_library.models
                 {
                     throw new Exception("Number inside of barangay");
                 }
-                _barangay = value;
+                _barangay = Capitalize(value);
             }
         }
         private string _barangay { get; set; }
@@ -182,7 +182,7 @@ namespace basic_information_library.models
                 {
                     throw new Exception("Number inside of city");
                 }
-                _city = value;
+                _city = Capitalize(value);
             }
         }
         private string _city { get; set; }
@@ -201,7 +201,7 @@ namespace basic_information_library.models
                 {
                     throw new Exception("Number inside of province");
                 }
-                _province = value;
+                _province = Capitalize(value);
             }
         }
         private string _province { get; set; }
@@ -217,14 +217,34 @@ namespace basic_information_library.models
                 {
                     throw new Exception("Number inside of country");
                 }
-                _country = value;
+                _country = Capitalize(value);
             }
         }
         private string _country { get; set; }
 
-        private static string Capitalize(string stringToRet)
+        private static string Capitalize(string origStr)
         {
-            return $"{stringToRet[0].ToString().ToUpper()}{stringToRet[1..]}";
+            string strToRet = "";
+            bool isFirstChar = true;
+            for (int j = 0; j < origStr.Length; j++)
+            {
+                if (origStr[j] == ' ')
+                {
+                    isFirstChar = true;
+                    strToRet += " ";
+                    continue;
+                }
+                if (isFirstChar)
+                {
+                    strToRet += origStr[j].ToString().ToUpper();
+                    isFirstChar = false;
+                }
+                else
+                {
+                    strToRet += origStr[j].ToString().ToLower();
+                }
+            }
+            return strToRet;
         }
     }
 }

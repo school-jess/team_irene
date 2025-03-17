@@ -15,8 +15,8 @@ public class Database
 
     public void Connect(string user)
     {
-        string connStr = $"Server=localhost; database=pos; user={user}; password={Env.GetString("MYSQL_ROOT_PASSWORD")};";
-        conn = new MySqlConnection();
+        string connStr = $"Server=localhost; database=first_database; user={user}; password={Env.GetString("MYSQL_ROOT_PASSWORD")};";
+        conn = new MySqlConnection(connStr);
         try
         {
             conn.Open();

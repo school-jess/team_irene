@@ -63,10 +63,10 @@ class Program
                 Console.WriteLine(e.Message);
             }
             ConsoleKey wantToTryAgain = ConsoleKey.A;
-            while (wantToTryAgain == ConsoleKey.Y || wantToTryAgain == ConsoleKey.N)
+            while (wantToTryAgain != ConsoleKey.Y && wantToTryAgain != ConsoleKey.N)
             {
                 Console.Write("Do you want to continue(Yy/Nn)? ");
-                wantToTryAgain = Console.ReadLine();
+                wantToTryAgain = Console.ReadKey().Key;
             }
         }
     }

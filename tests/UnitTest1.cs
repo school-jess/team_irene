@@ -9,7 +9,7 @@ public class UnitTest1
     public void TestFirstName()
     {
         BasicInformation model = new BasicInformation();
-        model.firstName = "Jess";
+        model.firstName = "jess";
         Assert.AreEqual("Jess", model.firstName);
     }
 
@@ -17,7 +17,7 @@ public class UnitTest1
     public void TestMiddleInitial()
     {
         BasicInformation model = new BasicInformation();
-        model.middleInitial = "P";
+        model.middleInitial = "p";
         Assert.AreEqual("P", model.middleInitial);
     }
 
@@ -25,7 +25,7 @@ public class UnitTest1
     public void TestLastName()
     {
         BasicInformation model = new BasicInformation();
-        model.lastName = "Evangelista";
+        model.lastName = "evangelista";
         Assert.AreEqual("Evangelista", model.lastName);
     }
 
@@ -41,24 +41,24 @@ public class UnitTest1
     public void TestFullName()
     {
         BasicInformation model = new BasicInformation();
-        model.firstName = "Jess Mathew";
+        model.firstName = "jess mathew";
         model.middleInitial = "";
-        model.lastName = "Evangelista";
+        model.lastName = "evangelista";
         model.suffix = "";
         Assert.AreEqual("Jess Mathew Evangelista", model.fullName);
-        model.firstName = "Jess Mathew";
-        model.middleInitial = "P";
-        model.lastName = "Evangelista";
+        model.firstName = "jess mathew";
+        model.middleInitial = "p";
+        model.lastName = "evangelista";
         model.suffix = "";
         Assert.AreEqual("Jess Mathew P. Evangelista", model.fullName);
-        model.firstName = "Jess Mathew";
+        model.firstName = "jess mathew";
         model.middleInitial = "";
-        model.lastName = "Evangelista";
+        model.lastName = "evangelista";
         model.suffix = "II";
         Assert.AreEqual("Jess Mathew Evangelista II", model.fullName);
-        model.firstName = "Jess Mathew";
-        model.middleInitial = "P";
-        model.lastName = "Evangelista";
+        model.firstName = "jess mathew";
+        model.middleInitial = "p";
+        model.lastName = "evangelista";
         model.suffix = "II";
         Assert.AreEqual("Jess Mathew P. Evangelista II", model.fullName);
     }
@@ -91,7 +91,7 @@ public class UnitTest1
     public void TestStreet()
     {
         BasicInformation model = new BasicInformation();
-        model.street = "Daclan Private Road";
+        model.street = "daclan private road";
         Assert.AreEqual("Daclan Private Road", model.street);
     }
 
@@ -99,7 +99,7 @@ public class UnitTest1
     public void TestBarangay()
     {
         BasicInformation model = new BasicInformation();
-        model.barangay = "Punta Princessa";
+        model.barangay = "punta princessa";
         Assert.AreEqual("Punta Princessa", model.barangay);
     }
 
@@ -107,7 +107,7 @@ public class UnitTest1
     public void TestCity()
     {
         BasicInformation model = new BasicInformation();
-        model.city = "Cebu City";
+        model.city = "cebu city";
         Assert.AreEqual("Cebu City", model.city);
     }
 
@@ -115,7 +115,7 @@ public class UnitTest1
     public void TestProvince()
     {
         BasicInformation model = new BasicInformation();
-        model.province = "Cebu";
+        model.province = "cebu";
         Assert.AreEqual("Cebu", model.province);
     }
 
@@ -123,7 +123,7 @@ public class UnitTest1
     public void TestCountry()
     {
         BasicInformation model = new BasicInformation();
-        model.country = "Philippines";
+        model.country = "philippines";
         Assert.AreEqual("Philippines", model.country);
     }
 
