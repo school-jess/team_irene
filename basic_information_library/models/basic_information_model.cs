@@ -8,14 +8,14 @@ namespace basic_information_library.models
             {
                 string fullNameToRet = "";
                 fullNameToRet += $"{Capitalize(_firstName)} ";
-                if (middleInitial != "")
+                if (_middleInitial != "")
                 {
-                    fullNameToRet += $"{middleInitial.ToUpper()}. ";
+                    fullNameToRet += $"{_middleInitial.ToUpper()}. ";
                 }
-                if (suffix != "")
+                if (_suffix != "")
                 {
                     fullNameToRet += $"{Capitalize(_lastName)} ";
-                    fullNameToRet += suffix;
+                    fullNameToRet += _suffix;
                 }
                 else
                 {
@@ -53,12 +53,28 @@ namespace basic_information_library.models
                 {
                     throw new Exception("Must provide first name input");
                 }
+                if (value.Any(char.IsDigit))
+                {
+                    throw new Exception("Number inside of first name");
+                }
                 _firstName = value;
             }
         }
         private string _firstName { get; set; }
 
-        public string middleInitial { get; set; }
+        public string middleInitial
+        {
+            get => _middleInitial; set
+            {
+                if (value.Any(char.IsDigit))
+                {
+                    throw new Exception("Number inside of middle initial");
+                }
+                _middleInitial = value;
+            }
+        }
+
+        private string _middleInitial { get; set; }
 
         public string lastName
         {
@@ -68,12 +84,28 @@ namespace basic_information_library.models
                 {
                     throw new Exception("Must provide last name input");
                 }
+                if (value.Any(char.IsDigit))
+                {
+                    throw new Exception("Number inside of last name");
+                }
                 _lastName = value;
             }
         }
         public string _lastName { get; set; }
 
-        public string suffix { get; set; }
+        public string suffix
+        {
+            get => _suffix; set
+            {
+                if (value.Any(char.IsDigit))
+                {
+                    throw new Exception("Number inside of suffix");
+                }
+                _suffix = value;
+            }
+        }
+
+        private string _suffix { get; set; }
 
         public string birthDay
         {
@@ -110,6 +142,10 @@ namespace basic_information_library.models
                 {
                     throw new Exception("Must provide street input");
                 }
+                if (value.Any(char.IsDigit))
+                {
+                    throw new Exception("Number inside of street");
+                }
                 _street = value;
             }
         }
@@ -124,6 +160,10 @@ namespace basic_information_library.models
                 {
                     throw new Exception("Must provide barangay input");
                 }
+                if (value.Any(char.IsDigit))
+                {
+                    throw new Exception("Number inside of barangay");
+                }
                 _barangay = value;
             }
         }
@@ -137,6 +177,10 @@ namespace basic_information_library.models
                 if (value == "")
                 {
                     throw new Exception("Must provide barangay input");
+                }
+                if (value.Any(char.IsDigit))
+                {
+                    throw new Exception("Number inside of city");
                 }
                 _city = value;
             }
@@ -153,6 +197,10 @@ namespace basic_information_library.models
                 {
                     throw new Exception("Must provide province input");
                 }
+                if (value.Any(char.IsDigit))
+                {
+                    throw new Exception("Number inside of province");
+                }
                 _province = value;
             }
         }
@@ -164,6 +212,10 @@ namespace basic_information_library.models
                 if (value == "")
                 {
                     throw new Exception("Must provide country input");
+                }
+                if (value.Any(char.IsDigit))
+                {
+                    throw new Exception("Number inside of country");
                 }
                 _country = value;
             }

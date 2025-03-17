@@ -17,8 +17,8 @@ public class UnitTest1
     public void TestMiddleInitial()
     {
         BasicInformation model = new BasicInformation();
-        model.middleInitial = "P.";
-        Assert.AreEqual("P.", model.firstName);
+        model.middleInitial = "P";
+        Assert.AreEqual("P", model.middleInitial);
     }
 
     [TestMethod]
@@ -47,7 +47,7 @@ public class UnitTest1
         model.suffix = "";
         Assert.AreEqual("Jess Mathew Evangelista", model.fullName);
         model.firstName = "Jess Mathew";
-        model.middleInitial = "P.";
+        model.middleInitial = "P";
         model.lastName = "Evangelista";
         model.suffix = "";
         Assert.AreEqual("Jess Mathew P. Evangelista", model.fullName);
@@ -57,17 +57,81 @@ public class UnitTest1
         model.suffix = "II";
         Assert.AreEqual("Jess Mathew Evangelista II", model.fullName);
         model.firstName = "Jess Mathew";
-        model.middleInitial = "P.";
+        model.middleInitial = "P";
         model.lastName = "Evangelista";
         model.suffix = "II";
         Assert.AreEqual("Jess Mathew P. Evangelista II", model.fullName);
     }
 
     [TestMethod]
+    public void TestBirthday()
+    {
+        BasicInformation model = new BasicInformation();
+        model.birthDay = "2005-03-30";
+        Assert.AreEqual("2005-03-30", model.birthDay);
+    }
+
+    [TestMethod]
+    public void TestAge()
+    {
+        BasicInformation model = new BasicInformation();
+        model.birthDay = "2005-03-30";
+        Assert.AreEqual(19, model.age);
+    }
+
+    [TestMethod]
+    public void TestHouseNumber()
+    {
+        BasicInformation model = new BasicInformation();
+        model.houseNumber = "239 F.";
+        Assert.AreEqual("239 F.", model.houseNumber);
+    }
+
+    [TestMethod]
+    public void TestStreet()
+    {
+        BasicInformation model = new BasicInformation();
+        model.street = "Daclan Private Road";
+        Assert.AreEqual("Daclan Private Road", model.street);
+    }
+
+    [TestMethod]
+    public void TestBarangay()
+    {
+        BasicInformation model = new BasicInformation();
+        model.barangay = "Punta Princessa";
+        Assert.AreEqual("Punta Princessa", model.barangay);
+    }
+
+    [TestMethod]
+    public void TestCity()
+    {
+        BasicInformation model = new BasicInformation();
+        model.city = "Cebu City";
+        Assert.AreEqual("Cebu City", model.city);
+    }
+
+    [TestMethod]
+    public void TestProvince()
+    {
+        BasicInformation model = new BasicInformation();
+        model.province = "Cebu";
+        Assert.AreEqual("Cebu", model.province);
+    }
+
+    [TestMethod]
+    public void TestCountry()
+    {
+        BasicInformation model = new BasicInformation();
+        model.country = "Philippines";
+        Assert.AreEqual("Philippines", model.country);
+    }
+
+    [TestMethod]
     public void TestInvalidBirthday()
     {
         BasicInformation model = new BasicInformation();
-        Assert.ThrowsException<Exception>(() => model.birthDay = "03-30-2005");
+        Assert.ThrowsException<FormatException>(() => model.birthDay = "03-30-2005");
     }
 
     [TestMethod]
@@ -159,6 +223,13 @@ public class UnitTest1
     {
         BasicInformation model = new BasicInformation();
         Assert.ThrowsException<Exception>(() => model.suffix = "II1");
+    }
+
+    [TestMethod]
+    public void TestNumberInStreet()
+    {
+        BasicInformation model = new BasicInformation();
+        Assert.ThrowsException<Exception>(() => model.street = "Daclan Private Road1");
     }
 
     [TestMethod]
