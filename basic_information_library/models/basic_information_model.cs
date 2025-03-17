@@ -84,14 +84,7 @@ namespace basic_information_library.models
                     throw new Exception("Must provide birthday input");
                 }
                 string format = "yyyy-MM-dd";
-                try
-                {
-                    _birthDay = DateTime.ParseExact(value, format, System.Globalization.CultureInfo.InvariantCulture);
-                }
-                catch (Exception e)
-                {
-                    throw new Exception(e.Message);
-                }
+                _birthDay = DateTime.ParseExact(value, format, System.Globalization.CultureInfo.InvariantCulture);
             }
         }
         public DateTime _birthDay { get; set; }
