@@ -58,6 +58,16 @@ public class Database
         Console.WriteLine($"{rowsAffected} row(s) inserted");
     }
 
+    public void Select()
+    {
+        MySqlCommand cmd = new MySqlCommand($"SELECT * FROM first_table", conn);
+        MySqlDataReader reader = cmd.ExecuteReader();
+        while (reader.Read())
+        {
+            Console.WriteLine($"id: {reader["id"]}, first_name: {reader["first_name"]}, middle_initial: {reader["middle_initial"]}, last_name: {reader["last_name"]}, suffix: {reader["suffix"]}, full_name: {reader["full_name"]}, birthday: {reader["birthday"]}, age: {reader["age"]}, house_number: {reader["house_number"]}, street_name: {reader["street_name"]}, barangay: {reader["barangay"]}, city: {reader["city"]}, country: {reader["country"]}, full_address: {reader["full_address"]}");
+        }
+    }
+
     ~Database()
     {
         conn.Close();
