@@ -57,6 +57,10 @@ namespace basic_information_library.models
                 {
                     throw new Exception("Number inside of first name");
                 }
+                if (value.Length > 20)
+                {
+                    throw new Exception("first name too long. Must be less than or equal to 20");
+                }
                 _firstName = Capitalize(value);
             }
         }
@@ -69,6 +73,10 @@ namespace basic_information_library.models
                 if (value.Any(char.IsDigit))
                 {
                     throw new Exception("Number inside of middle initial");
+                }
+                if (value.Length > 10)
+                {
+                    throw new Exception("middle initial too long. Must be less than or equal to 10");
                 }
                 _middleInitial = Capitalize(value);
             }
@@ -88,6 +96,10 @@ namespace basic_information_library.models
                 {
                     throw new Exception("Number inside of last name");
                 }
+                if (value.Length > 20)
+                {
+                    throw new Exception("last name too long. Must be less than or equal to 20");
+                }
                 _lastName = Capitalize(value);
             }
         }
@@ -100,6 +112,10 @@ namespace basic_information_library.models
                 if (value.Any(char.IsDigit))
                 {
                     throw new Exception("Number inside of suffix");
+                }
+                if (value.Length > 10)
+                {
+                    throw new Exception("suffix too long. Must be less than or equal to 10");
                 }
                 _suffix = value;
             }
@@ -129,6 +145,10 @@ namespace basic_information_library.models
                 {
                     throw new Exception("Must provide house number input");
                 }
+                if (value.Length > 10)
+                {
+                    throw new Exception("suffix too long. Must be less than or equal to 10");
+                }
                 _houseNumber = value;
             }
         }
@@ -145,6 +165,10 @@ namespace basic_information_library.models
                 if (value.Any(char.IsDigit))
                 {
                     throw new Exception("Number inside of street");
+                }
+                if (value.Length > 20)
+                {
+                    throw new Exception("suffix too long. Must be less than or equal to 20");
                 }
                 _street = Capitalize(value);
             }
@@ -164,6 +188,10 @@ namespace basic_information_library.models
                 {
                     throw new Exception("Number inside of barangay");
                 }
+                if (value.Length > 20)
+                {
+                    throw new Exception("suffix too long. Must be less than or equal to 20");
+                }
                 _barangay = Capitalize(value);
             }
         }
@@ -181,6 +209,10 @@ namespace basic_information_library.models
                 if (value.Any(char.IsDigit))
                 {
                     throw new Exception("Number inside of city");
+                }
+                if (value.Length > 20)
+                {
+                    throw new Exception("suffix too long. Must be less than or equal to 20");
                 }
                 _city = Capitalize(value);
             }
@@ -201,6 +233,10 @@ namespace basic_information_library.models
                 {
                     throw new Exception("Number inside of province");
                 }
+                if (value.Length > 20)
+                {
+                    throw new Exception("suffix too long. Must be less than or equal to 20");
+                }
                 _province = Capitalize(value);
             }
         }
@@ -216,6 +252,10 @@ namespace basic_information_library.models
                 if (value.Any(char.IsDigit))
                 {
                     throw new Exception("Number inside of country");
+                }
+                if (value.Length > 20)
+                {
+                    throw new Exception("suffix too long. Must be less than or equal to 20");
                 }
                 _country = Capitalize(value);
             }

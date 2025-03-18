@@ -259,4 +259,74 @@ public class UnitTest1
         BasicInformation model = new BasicInformation();
         Assert.ThrowsException<Exception>(() => model.country = "Phillipines1");
     }
+
+    [TestMethod]
+    public void TestFirstNameTooLong()
+    {
+        BasicInformation model = new BasicInformation();
+        Assert.ThrowsException<Exception>(() => model.firstName = "aaaaaaaaaaaaaaaaaaaaa");
+    }
+
+    [TestMethod]
+    public void TestMiddleInitialTooLong()
+    {
+        BasicInformation model = new BasicInformation();
+        Assert.ThrowsException<Exception>(() => model.middleInitial = "aaaaaaaaaaa");
+    }
+
+    [TestMethod]
+    public void TestLastNameTooLong()
+    {
+        BasicInformation model = new BasicInformation();
+        Assert.ThrowsException<Exception>(() => model.lastName = "aaaaaaaaaaaaaaaaaaaaa");
+    }
+
+    [TestMethod]
+    public void TestSuffixTooLong()
+    {
+        BasicInformation model = new BasicInformation();
+        Assert.ThrowsException<Exception>(() => model.suffix = "aaaaaaaaaaa");
+    }
+
+    [TestMethod]
+    public void TestHouseNumberTooLong()
+    {
+        BasicInformation model = new BasicInformation();
+        Assert.ThrowsException<Exception>(() => model.houseNumber = "aaaaaaaaaaa");
+    }
+
+    [TestMethod]
+    public void TestStreetTooLong()
+    {
+        BasicInformation model = new BasicInformation();
+        Assert.ThrowsException<Exception>(() => model.street = "aaaaaaaaaaaaaaaaaaaaa");
+    }
+
+    [TestMethod]
+    public void TestBarangayTooLong()
+    {
+        BasicInformation model = new BasicInformation();
+        Assert.ThrowsException<Exception>(() => model.barangay = "aaaaaaaaaaaaaaaaaaaaa");
+    }
+
+    [TestMethod]
+    public void TestCityTooLong()
+    {
+        BasicInformation model = new BasicInformation();
+        Assert.ThrowsException<Exception>(() => model.city = "aaaaaaaaaaaaaaaaaaaaa");
+    }
+
+    [TestMethod]
+    public void TestProvinceTooLong()
+    {
+        BasicInformation model = new BasicInformation();
+        Assert.ThrowsException<Exception>(() => model.province = "aaaaaaaaaaaaaaaaaaaaa");
+    }
+
+    [TestMethod]
+    public void TestTooLongCountry()
+    {
+        BasicInformation model = new BasicInformation();
+        Assert.ThrowsException<Exception>(() => model.country = "aaaaaaaaaaaaaaaaaaaaa");
+    }
 }
