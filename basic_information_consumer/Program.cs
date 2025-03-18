@@ -1,10 +1,17 @@
 using basic_information_library.models;
 using basic_information_library;
 
+enum Command
+{
+    Create,
+    Print
+}
+
 class Program
 {
     static void Main()
     {
+        Console.Clear();
         Database db = new Database();
         db.Connect("root");
         BasicInformation model = new BasicInformation();
@@ -26,14 +33,10 @@ class Program
                 Console.Write("Enter Suffix (Optional): ");
                 model.suffix = Console.ReadLine();
 
-                Console.WriteLine($"Full Name: {model.fullName}");
-
                 // Get birthdate and calculate age of the user
                 Console.Write("Enter Birthdate (yyyy-MM-dd): ");
                 model.birthDay = Console.ReadLine();
                 Console.WriteLine(model.birthDay);
-
-                Console.WriteLine($"Age: {model.age}");
 
                 // Get address details of the user
                 Console.Write("Enter House No.: ");
@@ -53,9 +56,11 @@ class Program
 
                 Console.Write("Enter Country: ");
                 model.country = Console.ReadLine();
-                // Format and display the final address
-                Console.WriteLine("\nFinal Address:");
-                Console.WriteLine(model.address);
+
+                Console.Clear();
+                Console.WriteLine($"Full Name: {model.fullName}");
+                Console.WriteLine($"Age: {model.age}");
+                Console.WriteLine($"Address: {model.address}");
                 db.Insert(model);
             }
             catch (Exception e)
