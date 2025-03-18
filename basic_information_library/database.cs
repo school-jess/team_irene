@@ -17,14 +17,7 @@ public class Database
     {
         string connStr = $"Server=localhost; database=first_database; user={user}; password={Env.GetString("MYSQL_ROOT_PASSWORD")};";
         conn = new MySqlConnection(connStr);
-        try
-        {
-            conn.Open();
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-        }
+        conn.Open();
     }
 
     public void Insert(BasicInformation model)

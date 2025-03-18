@@ -7,7 +7,14 @@ class Program
     {
         Console.Clear();
         Database db = new Database();
-        db.Connect("root");
+        try
+        {
+            db.Connect("root");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
         BasicInformation model = new BasicInformation();
         bool tryAgain = true;
         int selected = 1;
@@ -19,7 +26,7 @@ class Program
             Console.WriteLine("\u21E9 - Down");
             Console.WriteLine("\u21A9 - Enter");
             Console.WriteLine("********************");
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < options.Length; i++)
             {
                 if (i + 1 == selected)
                 {
@@ -112,7 +119,7 @@ class Program
                     }
                     break;
                 case ConsoleKey.DownArrow:
-                    if (selected == 2)
+                    if (selected == options.Length)
                     {
                         continue;
                     }
