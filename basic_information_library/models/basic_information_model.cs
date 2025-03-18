@@ -2,6 +2,12 @@ namespace basic_information_library.models
 {
     public class BasicInformation
     {
+        public BasicInformation(Database dbDependency)
+        {
+            db = dbDependency;
+        }
+        public Database db { get; set; }
+
         public string fullName
         {
             get
@@ -24,7 +30,6 @@ namespace basic_information_library.models
                 return fullNameToRet;
             }
         }
-
         public int age
         {
             get
@@ -64,7 +69,7 @@ namespace basic_information_library.models
                 _firstName = Capitalize(value);
             }
         }
-        private string _firstName { get; set; }
+        private string _firstName;
 
         public string middleInitial
         {
@@ -82,7 +87,7 @@ namespace basic_information_library.models
             }
         }
 
-        private string _middleInitial { get; set; }
+        private string _middleInitial;
 
         public string lastName
         {
@@ -103,7 +108,7 @@ namespace basic_information_library.models
                 _lastName = Capitalize(value);
             }
         }
-        public string _lastName { get; set; }
+        public string _lastName;
 
         public string suffix
         {
@@ -121,7 +126,7 @@ namespace basic_information_library.models
             }
         }
 
-        private string _suffix { get; set; }
+        private string _suffix;
 
         public string birthDay
         {
@@ -135,7 +140,7 @@ namespace basic_information_library.models
                 _birthDay = DateTime.ParseExact(value, format, System.Globalization.CultureInfo.InvariantCulture);
             }
         }
-        public DateTime _birthDay { get; set; }
+        public DateTime _birthDay;
 
         public string houseNumber
         {
@@ -152,7 +157,7 @@ namespace basic_information_library.models
                 _houseNumber = value;
             }
         }
-        private string _houseNumber { get; set; }
+        private string _houseNumber;
 
         public string street
         {
@@ -173,7 +178,7 @@ namespace basic_information_library.models
                 _street = Capitalize(value);
             }
         }
-        private string _street { get; set; }
+        private string _street;
 
         public string barangay
         {
@@ -195,7 +200,7 @@ namespace basic_information_library.models
                 _barangay = Capitalize(value);
             }
         }
-        private string _barangay { get; set; }
+        private string _barangay;
 
         public string city
         {
@@ -217,7 +222,7 @@ namespace basic_information_library.models
                 _city = Capitalize(value);
             }
         }
-        private string _city { get; set; }
+        private string _city;
 
         public string province
         {
@@ -240,7 +245,7 @@ namespace basic_information_library.models
                 _province = Capitalize(value);
             }
         }
-        private string _province { get; set; }
+        private string _province;
         public string country
         {
             get => _country; set
@@ -260,7 +265,7 @@ namespace basic_information_library.models
                 _country = Capitalize(value);
             }
         }
-        private string _country { get; set; }
+        private string _country;
 
         private static string Capitalize(string origStr)
         {
@@ -285,6 +290,11 @@ namespace basic_information_library.models
                 }
             }
             return strToRet;
+        }
+
+        public void Save()
+        {
+            db.Insert(this);
         }
     }
 }

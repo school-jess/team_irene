@@ -15,7 +15,7 @@ class Program
         {
             Console.WriteLine(e);
         }
-        BasicInformation model = new BasicInformation();
+        BasicInformation model = new BasicInformation(db);
         bool tryAgain = true;
         int selected = 1;
         string[] options = { "Create", "Print", "Exit" };
@@ -96,7 +96,8 @@ class Program
                                     Console.WriteLine($"Full Name: {model.fullName}");
                                     Console.WriteLine($"Age: {model.age}");
                                     Console.WriteLine($"Address: {model.address}");
-                                    db.Insert(model);
+                                    // db.Insert(model);
+                                    model.Save();
 
                                     break;
                                 case 2:
