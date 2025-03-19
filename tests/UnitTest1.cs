@@ -364,58 +364,19 @@ public class TestDatabase
         db.CloseReader(data);
         db.Remove(model.firstName);
         Console.WriteLine($"{newModel.firstName} {newModel.middleInitial} {newModel.lastName} {newModel.fullName} {newModel.birthday} {newModel.age} {newModel.houseNumber} {newModel.street} {newModel.barangay} {newModel.city} {newModel.province} {newModel.country}");
-        if (model.firstName != newModel.firstName)
-        {
-            Assert.Fail();
-        }
-        else if (model.middleInitial != newModel.middleInitial)
-        {
-            Assert.Fail();
-        }
-        else if (model.lastName != newModel.lastName)
-        {
-            Assert.Fail();
-        }
-        else if (model.suffix != newModel.suffix)
-        {
-            Assert.Fail();
-        }
-        else if (model.fullName != newModel.fullName)
-        {
-            Assert.Fail();
-        }
-        else if (model.birthday != newModel.birthday)
-        {
-            Assert.Fail();
-        }
-        else if (model.age != newModel.age)
-        {
-            Assert.Fail();
-        }
-        else if (model.houseNumber != newModel.houseNumber)
-        {
-            Assert.Fail();
-        }
-        else if (model.street != newModel.street)
-        {
-            Assert.Fail();
-        }
-        else if (model.barangay != newModel.barangay)
-        {
-            Assert.Fail();
-        }
-        else if (model.city != newModel.city)
-        {
-            Assert.Fail();
-        }
-        else if (model.province != newModel.province)
-        {
-            Assert.Fail();
-        }
-        else if (model.country != newModel.country)
-        {
-            Assert.Fail();
-        }
+        Assert.AreEqual(model.firstName, newModel.firstName);
+        Assert.AreEqual(model.middleInitial, newModel.middleInitial);
+        Assert.AreEqual(model.lastName, newModel.lastName);
+        Assert.AreEqual(model.suffix, newModel.suffix);
+        Assert.AreEqual(model.fullName, newModel.fullName);
+        Assert.AreEqual(model.birthday, newModel.birthday);
+        Assert.AreEqual(model.age, newModel.age);
+        Assert.AreEqual(model.houseNumber, newModel.houseNumber);
+        Assert.AreEqual(model.street, newModel.street);
+        Assert.AreEqual(model.barangay, newModel.barangay);
+        Assert.AreEqual(model.city, newModel.city);
+        Assert.AreEqual(model.province, newModel.province);
+        Assert.AreEqual(model.country, newModel.country);
     }
 
     [TestMethod]
