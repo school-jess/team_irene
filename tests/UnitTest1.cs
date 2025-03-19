@@ -7,11 +7,13 @@ namespace Tests;
 public class TestModel
 {
     private BasicInformation model;
+    private Database db;
 
     [TestInitialize]
     public void Setup()
     {
-        model = new BasicInformation();
+        db = new Database();
+        model = new BasicInformation(db);
     }
 
     [TestMethod]
@@ -307,8 +309,8 @@ public class TestDatabase
     [TestInitialize]
     public void Setup()
     {
-        model = new BasicInformation();
         db = new Database();
+        model = new BasicInformation(db);
     }
 
     [TestMethod]
