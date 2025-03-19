@@ -23,31 +23,31 @@ public class Database
 
     public void Insert(BasicInformation model)
     {
-        MySqlCommand cmd = new MySqlCommand("INSERT INTO first_table (first_name, middle_initial, last_name, suffix, full_name, birthday, age, house_number, street_name, barangay, city, country, full_address, province) value (@value1, @value2, @value3, @value4, @value5, @value6, @value7, @value8, @value9, @value10, @value11, @value12, @value13, @value14)", conn);
-        cmd.Parameters.AddWithValue("@value1", model.firstName);
+        MySqlCommand cmd = new MySqlCommand("INSERT INTO first_table (first_name, middle_initial, last_name, suffix, full_name, birthday, age, house_number, street_name, barangay, city, country, full_address, province) value (@firstName, @middleInitial, @lastName, @suffix, @fullName, @birthday, @age, @houseNumber, @street, @barangay, @city, @country, @address, @province)", conn);
+        cmd.Parameters.AddWithValue("@firstName", model.firstName);
         string? middleInitial = null;
         if (model.middleInitial != "")
         {
             middleInitial = model.middleInitial;
         }
-        cmd.Parameters.AddWithValue("@value2", middleInitial);
-        cmd.Parameters.AddWithValue("@value3", model.lastName);
+        cmd.Parameters.AddWithValue("@middleInitial", middleInitial);
+        cmd.Parameters.AddWithValue("@lastName", model.lastName);
         string? suffix = null;
         if (model.suffix != "")
         {
             suffix = model.suffix;
         }
-        cmd.Parameters.AddWithValue("@value4", suffix);
-        cmd.Parameters.AddWithValue("@value5", model.fullName);
-        cmd.Parameters.AddWithValue("@value6", model.birthday);
-        cmd.Parameters.AddWithValue("@value7", model.age);
-        cmd.Parameters.AddWithValue("@value8", model.houseNumber);
-        cmd.Parameters.AddWithValue("@value9", model.street);
-        cmd.Parameters.AddWithValue("@value10", model.barangay);
-        cmd.Parameters.AddWithValue("@value11", model.city);
-        cmd.Parameters.AddWithValue("@value12", model.country);
-        cmd.Parameters.AddWithValue("@value13", model.address);
-        cmd.Parameters.AddWithValue("@value14", model.province);
+        cmd.Parameters.AddWithValue("@suffix", suffix);
+        cmd.Parameters.AddWithValue("@fullName", model.fullName);
+        cmd.Parameters.AddWithValue("@birthday", model.birthday);
+        cmd.Parameters.AddWithValue("@age", model.age);
+        cmd.Parameters.AddWithValue("@houseNumber", model.houseNumber);
+        cmd.Parameters.AddWithValue("@street", model.street);
+        cmd.Parameters.AddWithValue("@barangay", model.barangay);
+        cmd.Parameters.AddWithValue("@city", model.city);
+        cmd.Parameters.AddWithValue("@country", model.country);
+        cmd.Parameters.AddWithValue("@address", model.address);
+        cmd.Parameters.AddWithValue("@province", model.province);
         int rowsAffected = cmd.ExecuteNonQuery();
         Console.WriteLine("Saved to database");
         Console.WriteLine($"{rowsAffected} row(s) inserted");
@@ -75,8 +75,9 @@ public class Database
         {
             throw new Exception("Must five first name");
         }
-        string sqlStr = $"DELETE FROM first_table WHERE first_name=\"{firstName}\"";
+        string sqlStr = $"DELETE FROM first_table WHERE first_name=@first_name";
         MySqlCommand cmd = new MySqlCommand(sqlStr, conn);
+        cmd.Parameters.AddWithValue("first_name", firstName);
         cmd.ExecuteNonQuery();
     }
 
