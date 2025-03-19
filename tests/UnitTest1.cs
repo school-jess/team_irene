@@ -8,12 +8,10 @@ namespace Tests;
 public class TestModel
 {
     private BasicInformation model;
-    private Database db;
 
     [TestInitialize]
     public void Setup()
     {
-        db = new Database();
         model = new BasicInformation();
     }
 
@@ -307,25 +305,17 @@ public class TestDatabase
     private BasicInformation model;
     private Database db;
 
+    [ClassInitialize]
+    public static void classSetup(TestContext ctx)
+    {
+    }
+
     [TestInitialize]
     public void Setup()
     {
         db = new Database();
+        db.Connect("root");
         model = new BasicInformation();
-    }
-
-    [TestMethod]
-    public void TestDatabaseConn()
-    {
-        Assert.ThrowsException<Exception>(() =>
-        {
-            try
-            {
-                db.Connect("root");
-                throw new Exception();
-            }
-            catch { }
-        });
     }
 
     [TestMethod]
@@ -342,42 +332,106 @@ public class TestDatabase
         model.city = "cebu city";
         model.province = "cebu";
         model.country = "philippines";
-        try
+        db.Insert(model);
+        MySqlDataReader data = db.Select(model.firstName);
+        BasicInformation newModel = new BasicInformation();
+        while (data.Read())
         {
-            db.Connect("root");
-            db.Insert(model);
-            List<MySqlDataReader> data = db.Select(model.firstName);
-            MySqlDataReader row = data[0];
-            BasicInformation newModel = new BasicInformation();
-            newModel.firstName = (string)row["first_name"];
-            newModel.middleInitial = (string)row["middle_initial"];
-            newModel.lastName = (string)row["last_name"];
-            newModel.suffix = (string)row["suffix"];
-            newModel.birthday = (string)row["birthday"];
-            newModel.houseNumber = (string)row["house_number"];
-            newModel.street = (string)row["street"];
-            newModel.barangay = (string)row["barangay"];
-            newModel.city = (string)row["city"];
-            newModel.province = (string)row["province"];
-            newModel.country = (string)row["country"];
-            db.Remove(model.firstName);
-            Assert.AreEqual(model, newModel);
+            newModel.firstName = (string)data["first_name"];
+            string middleInitial = "";
+            var dataMiddleInitial = data["middle_initial"];
+            if (dataMiddleInitial.GetType().Name != "DBNull")
+            {
+                middleInitial = (string)dataMiddleInitial;
+            }
+            newModel.middleInitial = middleInitial;
+            newModel.lastName = (string)data["last_name"];
+            string suffix = "";
+            var dataSuffix = data["suffix"];
+            if (dataSuffix.GetType().Name != "DBNull")
+            {
+                suffix = (string)dataSuffix;
+            }
+            newModel.suffix = suffix;
+            newModel.birthday = Convert.ToDateTime(data["birthday"]).ToString("yyyy-MM-dd");
+            newModel.houseNumber = (string)data["house_number"];
+            newModel.street = (string)data["street_name"];
+            newModel.barangay = (string)data["barangay"];
+            newModel.city = (string)data["city"];
+            newModel.province = (string)data["province"];
+            newModel.country = (string)data["country"];
         }
-        catch { }
+        db.CloseReader(data);
+        db.Remove(model.firstName);
+        Console.WriteLine($"{newModel.firstName} {newModel.middleInitial} {newModel.lastName} {newModel.fullName} {newModel.birthday} {newModel.age} {newModel.houseNumber} {newModel.street} {newModel.barangay} {newModel.city} {newModel.province} {newModel.country}");
+        if (model.firstName != newModel.firstName)
+        {
+            Assert.Fail();
+        }
+        else if (model.middleInitial != newModel.middleInitial)
+        {
+            Assert.Fail();
+        }
+        else if (model.lastName != newModel.lastName)
+        {
+            Assert.Fail();
+        }
+        else if (model.suffix != newModel.suffix)
+        {
+            Assert.Fail();
+        }
+        else if (model.fullName != newModel.fullName)
+        {
+            Assert.Fail();
+        }
+        else if (model.birthday != newModel.birthday)
+        {
+            Assert.Fail();
+        }
+        else if (model.age != newModel.age)
+        {
+            Assert.Fail();
+        }
+        else if (model.houseNumber != newModel.houseNumber)
+        {
+            Assert.Fail();
+        }
+        else if (model.street != newModel.street)
+        {
+            Assert.Fail();
+        }
+        else if (model.barangay != newModel.barangay)
+        {
+            Assert.Fail();
+        }
+        else if (model.city != newModel.city)
+        {
+            Assert.Fail();
+        }
+        else if (model.province != newModel.province)
+        {
+            Assert.Fail();
+        }
+        else if (model.country != newModel.country)
+        {
+            Assert.Fail();
+        }
     }
 
     [TestMethod]
     public void TestDatabaseSelect()
     {
-        Assert.ThrowsException<Exception>(() =>
+        try
         {
-            try
+            MySqlDataReader data = db.Select(null);
+            while (data.Read())
             {
-                db.Connect("root");
-                List<MySqlDataReader> data = db.Select(null);
-                throw new Exception();
             }
-            catch { }
-        });
+            db.CloseReader(data);
+        }
+        catch
+        {
+            throw new Exception();
+        }
     }
 }

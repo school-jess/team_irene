@@ -1,28 +1,29 @@
 ﻿using MySql.Data.MySqlClient;
-using DotNetEnv;
 using basic_information_library.models;
+using Microsoft.Extensions.Configuration;
 
 namespace basic_information_library;
 
 public class Database
 {
     MySqlConnection conn { get; set; }
+    IConfigurationRoot config;
 
     public Database()
     {
-        Env.Load();
+        config = new ConfigurationBuilder().AddUserSecrets<Database>().Build();
     }
 
     public void Connect(string user)
     {
-        string connStr = $"Server=localhost; database=first_database; user={user}; password={Env.GetString("MYSQL_ROOT_PASSWORD")};";
+        string connStr = $"Server=localhost; database=first_database; user={user}; password={config["MYSQL_ROOT_PASSWORD"]};";
         conn = new MySqlConnection(connStr);
         conn.Open();
     }
 
     public void Insert(BasicInformation model)
     {
-        MySqlCommand cmd = new MySqlCommand("INSERT INTO first_table (first_name, middle_initial, last_name, suffix, full_name, birthday, age, house_number, street_name, barangay, city, country, full_address) value (@value1, @value2, @value3, @value4, @value5, @value6, @value7, @value8, @value9, @value10, @value11, @value12, @value13)", conn);
+        MySqlCommand cmd = new MySqlCommand("INSERT INTO first_table (first_name, middle_initial, last_name, suffix, full_name, birthday, age, house_number, street_name, barangay, city, country, full_address, province) value (@value1, @value2, @value3, @value4, @value5, @value6, @value7, @value8, @value9, @value10, @value11, @value12, @value13, @value14)", conn);
         cmd.Parameters.AddWithValue("@value1", model.firstName);
         string? middleInitial = null;
         if (model.middleInitial != "")
@@ -46,41 +47,42 @@ public class Database
         cmd.Parameters.AddWithValue("@value11", model.city);
         cmd.Parameters.AddWithValue("@value12", model.country);
         cmd.Parameters.AddWithValue("@value13", model.address);
+        cmd.Parameters.AddWithValue("@value14", model.province);
         int rowsAffected = cmd.ExecuteNonQuery();
         Console.WriteLine("Saved to database");
         Console.WriteLine($"{rowsAffected} row(s) inserted");
     }
 
-    public List<MySqlDataReader> Select(string? firstName)
+    public MySqlDataReader Select(string? firstName)
     {
-        List<MySqlDataReader> data = new List<MySqlDataReader>();
         string sqlStr = "SELECT * FROM first_table";
         if (firstName != null)
         {
-            sqlStr += $" WHERE first_name=\"{firstName}\"";
+            sqlStr += $" WHERE first_name=@value1";
         }
         MySqlCommand cmd = new MySqlCommand(sqlStr, conn);
-        MySqlDataReader reader = cmd.ExecuteReader();
-        while (reader.Read())
+        if (firstName != null)
         {
-            data.Add(reader);
+            cmd.Parameters.AddWithValue("@value1", firstName);
         }
-        return data;
+        MySqlDataReader reader = cmd.ExecuteReader();
+        return reader;
     }
 
     public void Remove(string firstName)
     {
-        string sqlStr = "DELETE FROM first_table WHERE first_name=\"{firstName}\"";
-        if (firstName != null)
+        if (firstName == "")
         {
-            sqlStr += $" WHERE first_name=\"{firstName}\"";
+            throw new Exception("Must five first name");
         }
+        string sqlStr = $"DELETE FROM first_table WHERE first_name=\"{firstName}\"";
         MySqlCommand cmd = new MySqlCommand(sqlStr, conn);
-        MySqlDataReader reader = cmd.ExecuteReader();
-        while (reader.Read())
-        {
-            Console.WriteLine($"id: {reader["id"]}, first_name: {reader["first_name"]}, middle_initial: {reader["middle_initial"]}, last_name: {reader["last_name"]}, suffix: {reader["suffix"]}, full_name: {reader["full_name"]}, birthday: {reader["birthday"]}, age: {reader["age"]}, house_number: {reader["house_number"]}, street_name: {reader["street_name"]}, barangay: {reader["barangay"]}, city: {reader["city"]}, country: {reader["country"]}, full_address: {reader["full_address"]}");
-        }
+        cmd.ExecuteNonQuery();
+    }
+
+    public void CloseReader(MySqlDataReader reader)
+    {
+        reader.Close();
     }
 
     ~Database()

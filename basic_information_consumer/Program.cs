@@ -16,7 +16,7 @@ class Program
         {
             Console.WriteLine(e);
         }
-        BasicInformation model = new BasicInformation(db);
+        BasicInformation model = new BasicInformation();
         bool tryAgain = true;
         int selected = 1;
         string[] options = { "Create", "Print", "Exit" };
@@ -72,7 +72,6 @@ class Program
                                     // Get birthdate and calculate age of the user
                                     Console.Write("Enter Birthdate (yyyy-MM-dd): ");
                                     model.birthday = Console.ReadLine() ?? "";
-                                    Console.WriteLine(model.birthday);
 
                                     // Get address details of the user
                                     Console.Write("Enter House No.: ");
@@ -100,11 +99,12 @@ class Program
                                     db.Insert(model);
                                     break;
                                 case 2:
-                                    List<MySqlDataReader> data = db.Select(null);
-                                    foreach (var row in data)
+                                    MySqlDataReader data = db.Select(null);
+                                    while (data.Read())
                                     {
-                                        Console.WriteLine($"id: {row["id"]}, first name: {row["first_name"]}, middle initial: {row["middle_initial"]}, last name: {row["last_name"]}, suffix: {row["suffix"]}, full name: {row["fullName"]}, birthday: {row["birthday"]}, age: {row["age"]}, house number: {row["house_number"]}, street: {row["street"]}, barangay: {row["barangay"]}, city: {row["city"]}, province: {row["province"]}, country: {row["country"]}");
+                                        Console.WriteLine($"id: {data["id"]}, first name: {data["first_name"]}, middle initial: {data["middle_initial"]}, last name: {data["last_name"]}, suffix: {data["suffix"]}, full name: {data["full_name"]}, birthday: {data["birthday"]}, age: {data["age"]}, house number: {data["house_number"]}, street: {data["street_name"]}, barangay: {data["barangay"]}, city: {data["city"]}, province: {data["province"]}, country: {data["country"]}");
                                     }
+                                    db.CloseReader(data);
                                     break;
                                 case 3:
                                     goto exited;
@@ -119,6 +119,10 @@ class Program
                         {
                             Console.Write("Do you want to continue(Yy/Nn)? ");
                             wantToTryAgain = Console.ReadKey().Key;
+                        }
+                        if (wantToTryAgain == ConsoleKey.N)
+                        {
+                            break;
                         }
                     }
                     break;
