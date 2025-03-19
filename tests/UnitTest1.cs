@@ -1,5 +1,6 @@
 using basic_information_library.models;
 using basic_information_library;
+using MySql.Data.MySqlClient;
 
 namespace Tests;
 
@@ -13,7 +14,7 @@ public class TestModel
     public void Setup()
     {
         db = new Database();
-        model = new BasicInformation(db);
+        model = new BasicInformation();
     }
 
     [TestMethod]
@@ -72,14 +73,14 @@ public class TestModel
     [TestMethod]
     public void TestBirthday()
     {
-        model.birthDay = "2005-03-30";
-        Assert.AreEqual("2005-03-30", model.birthDay);
+        model.birthday = "2005-03-30";
+        Assert.AreEqual("2005-03-30", model.birthday);
     }
 
     [TestMethod]
     public void TestAge()
     {
-        model.birthDay = "2005-03-30";
+        model.birthday = "2005-03-30";
         Assert.AreEqual(19, model.age);
     }
 
@@ -128,7 +129,7 @@ public class TestModel
     [TestMethod]
     public void TestInvalidBirthday()
     {
-        Assert.ThrowsException<FormatException>(() => model.birthDay = "03-30-2005");
+        Assert.ThrowsException<FormatException>(() => model.birthday = "03-30-2005");
     }
 
     [TestMethod]
@@ -146,7 +147,7 @@ public class TestModel
     [TestMethod]
     public void TestNoBirthday()
     {
-        Assert.ThrowsException<Exception>(() => model.birthDay = "");
+        Assert.ThrowsException<Exception>(() => model.birthday = "");
     }
 
     [TestMethod]
@@ -310,7 +311,7 @@ public class TestDatabase
     public void Setup()
     {
         db = new Database();
-        model = new BasicInformation(db);
+        model = new BasicInformation();
     }
 
     [TestMethod]
@@ -334,23 +335,35 @@ public class TestDatabase
         model.middleInitial = "p";
         model.lastName = "evangelista";
         model.suffix = "";
-        model.birthDay = "2005-03-30";
+        model.birthday = "2005-03-30";
         model.houseNumber = "239 F.";
         model.street = "daclan private road";
         model.barangay = "punta princessa";
         model.city = "cebu city";
         model.province = "cebu";
         model.country = "philippines";
-        Assert.ThrowsException<Exception>(() =>
+        try
         {
-            try
-            {
-                db.Connect("root");
-                db.Insert(model);
-                throw new Exception();
-            }
-            catch { }
-        });
+            db.Connect("root");
+            db.Insert(model);
+            List<MySqlDataReader> data = db.Select(model.firstName);
+            MySqlDataReader row = data[0];
+            BasicInformation newModel = new BasicInformation();
+            newModel.firstName = (string)row["first_name"];
+            newModel.middleInitial = (string)row["middle_initial"];
+            newModel.lastName = (string)row["last_name"];
+            newModel.suffix = (string)row["suffix"];
+            newModel.birthday = (string)row["birthday"];
+            newModel.houseNumber = (string)row["house_number"];
+            newModel.street = (string)row["street"];
+            newModel.barangay = (string)row["barangay"];
+            newModel.city = (string)row["city"];
+            newModel.province = (string)row["province"];
+            newModel.country = (string)row["country"];
+            db.Remove(model.firstName);
+            Assert.AreEqual(model, newModel);
+        }
+        catch { }
     }
 
     [TestMethod]
@@ -361,7 +374,7 @@ public class TestDatabase
             try
             {
                 db.Connect("root");
-                db.Select();
+                List<MySqlDataReader> data = db.Select(null);
                 throw new Exception();
             }
             catch { }

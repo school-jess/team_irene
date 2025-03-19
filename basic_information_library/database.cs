@@ -22,7 +22,7 @@ public class Database
 
     public void Insert(BasicInformation model)
     {
-        MySqlCommand cmd = new MySqlCommand($"INSERT INTO first_table (first_name, middle_initial, last_name, suffix, full_name, birthday, age, house_number, street_name, barangay, city, country, full_address) value (@value1, @value2, @value3, @value4, @value5, @value6, @value7, @value8, @value9, @value10, @value11, @value12, @value13)", conn);
+        MySqlCommand cmd = new MySqlCommand("INSERT INTO first_table (first_name, middle_initial, last_name, suffix, full_name, birthday, age, house_number, street_name, barangay, city, country, full_address) value (@value1, @value2, @value3, @value4, @value5, @value6, @value7, @value8, @value9, @value10, @value11, @value12, @value13)", conn);
         cmd.Parameters.AddWithValue("@value1", model.firstName);
         string? middleInitial = null;
         if (model.middleInitial != "")
@@ -38,7 +38,7 @@ public class Database
         }
         cmd.Parameters.AddWithValue("@value4", suffix);
         cmd.Parameters.AddWithValue("@value5", model.fullName);
-        cmd.Parameters.AddWithValue("@value6", model.birthDay);
+        cmd.Parameters.AddWithValue("@value6", model.birthday);
         cmd.Parameters.AddWithValue("@value7", model.age);
         cmd.Parameters.AddWithValue("@value8", model.houseNumber);
         cmd.Parameters.AddWithValue("@value9", model.street);
@@ -51,9 +51,31 @@ public class Database
         Console.WriteLine($"{rowsAffected} row(s) inserted");
     }
 
-    public void Select()
+    public List<MySqlDataReader> Select(string? firstName)
     {
-        MySqlCommand cmd = new MySqlCommand($"SELECT * FROM first_table", conn);
+        List<MySqlDataReader> data = new List<MySqlDataReader>();
+        string sqlStr = "SELECT * FROM first_table";
+        if (firstName != null)
+        {
+            sqlStr += $" WHERE first_name=\"{firstName}\"";
+        }
+        MySqlCommand cmd = new MySqlCommand(sqlStr, conn);
+        MySqlDataReader reader = cmd.ExecuteReader();
+        while (reader.Read())
+        {
+            data.Add(reader);
+        }
+        return data;
+    }
+
+    public void Remove(string firstName)
+    {
+        string sqlStr = "DELETE FROM first_table WHERE first_name=\"{firstName}\"";
+        if (firstName != null)
+        {
+            sqlStr += $" WHERE first_name=\"{firstName}\"";
+        }
+        MySqlCommand cmd = new MySqlCommand(sqlStr, conn);
         MySqlDataReader reader = cmd.ExecuteReader();
         while (reader.Read())
         {

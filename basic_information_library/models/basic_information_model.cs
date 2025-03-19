@@ -2,12 +2,6 @@ namespace basic_information_library.models
 {
     public class BasicInformation
     {
-        public BasicInformation(Database dbDependency)
-        {
-            db = dbDependency;
-        }
-        public Database db { get; set; }
-
         public string fullName
         {
             get
@@ -128,7 +122,7 @@ namespace basic_information_library.models
 
         private string _suffix;
 
-        public string birthDay
+        public string birthday
         {
             get => _birthDay.ToString("yyyy-MM-dd"); set
             {
@@ -290,11 +284,6 @@ namespace basic_information_library.models
                 }
             }
             return strToRet;
-        }
-
-        public void Save()
-        {
-            db.Insert(this);
         }
     }
 }

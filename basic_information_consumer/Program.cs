@@ -1,5 +1,6 @@
 using basic_information_library.models;
 using basic_information_library;
+using MySql.Data.MySqlClient;
 
 class Program
 {
@@ -70,8 +71,8 @@ class Program
 
                                     // Get birthdate and calculate age of the user
                                     Console.Write("Enter Birthdate (yyyy-MM-dd): ");
-                                    model.birthDay = Console.ReadLine() ?? "";
-                                    Console.WriteLine(model.birthDay);
+                                    model.birthday = Console.ReadLine() ?? "";
+                                    Console.WriteLine(model.birthday);
 
                                     // Get address details of the user
                                     Console.Write("Enter House No.: ");
@@ -96,12 +97,14 @@ class Program
                                     Console.WriteLine($"Full Name: {model.fullName}");
                                     Console.WriteLine($"Age: {model.age}");
                                     Console.WriteLine($"Address: {model.address}");
-                                    // db.Insert(model);
-                                    model.Save();
-
+                                    db.Insert(model);
                                     break;
                                 case 2:
-                                    db.Select();
+                                    List<MySqlDataReader> data = db.Select(null);
+                                    foreach (var row in data)
+                                    {
+                                        Console.WriteLine($"id: {row["id"]}, first name: {row["first_name"]}, middle initial: {row["middle_initial"]}, last name: {row["last_name"]}, suffix: {row["suffix"]}, full name: {row["fullName"]}, birthday: {row["birthday"]}, age: {row["age"]}, house number: {row["house_number"]}, street: {row["street"]}, barangay: {row["barangay"]}, city: {row["city"]}, province: {row["province"]}, country: {row["country"]}");
+                                    }
                                     break;
                                 case 3:
                                     goto exited;
