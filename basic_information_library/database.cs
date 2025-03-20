@@ -53,31 +53,31 @@ public class Database
         Console.WriteLine($"{rowsAffected} row(s) inserted");
     }
 
-    public MySqlDataReader Select(string? firstName)
+    public MySqlDataReader Select(string? fullName)
     {
         string sqlStr = "SELECT * FROM first_table";
-        if (firstName != null)
+        if (fullName != null)
         {
-            sqlStr += $" WHERE first_name=@value1";
+            sqlStr += $" WHERE full_name=@fullName";
         }
         MySqlCommand cmd = new MySqlCommand(sqlStr, conn);
-        if (firstName != null)
+        if (fullName != null)
         {
-            cmd.Parameters.AddWithValue("@value1", firstName);
+            cmd.Parameters.AddWithValue("@fullName", fullName);
         }
         MySqlDataReader reader = cmd.ExecuteReader();
         return reader;
     }
 
-    public void Remove(string firstName)
+    public void Remove(string fullName)
     {
-        if (firstName == "")
+        if (fullName == "")
         {
-            throw new Exception("Must five first name");
+            throw new Exception("Must full first name");
         }
-        string sqlStr = $"DELETE FROM first_table WHERE first_name=@first_name";
+        string sqlStr = $"DELETE FROM first_table WHERE full_name=@fullName";
         MySqlCommand cmd = new MySqlCommand(sqlStr, conn);
-        cmd.Parameters.AddWithValue("first_name", firstName);
+        cmd.Parameters.AddWithValue("@fullName", fullName);
         cmd.ExecuteNonQuery();
     }
 
