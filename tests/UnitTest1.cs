@@ -1,6 +1,5 @@
 using basic_information_library.models;
-using basic_information_library;
-using MySql.Data.MySqlClient;
+// using MySql.Data.MySqlClient;
 
 namespace Tests;
 

@@ -2,6 +2,7 @@ namespace basic_information_library.models;
 
 public class BasicInformation
 {
+    public int id { get; set; }
     public string fullName
     {
         get

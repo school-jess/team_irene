@@ -23,5 +23,4 @@
   <ItemGroup>
     <ProjectReference Include="..\basic_information_library\basic_information_library.csproj" />
   </ItemGroup>
-
 </Project>
