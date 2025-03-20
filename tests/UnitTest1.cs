@@ -1,5 +1,5 @@
 using basic_information_library.models;
-using basic_information_library;
+// using MySql.Data.MySqlClient;
 
 namespace Tests;
 
@@ -70,14 +70,14 @@ public class TestModel
     [TestMethod]
     public void TestBirthday()
     {
-        model.birthDay = "2005-03-30";
-        Assert.AreEqual("2005-03-30", model.birthDay);
+        model.birthday = "2005-03-30";
+        Assert.AreEqual("2005-03-30", model.birthday);
     }
 
     [TestMethod]
     public void TestAge()
     {
-        model.birthDay = "2005-03-30";
+        model.birthday = "2005-03-30";
         Assert.AreEqual(19, model.age);
     }
 
@@ -126,7 +126,7 @@ public class TestModel
     [TestMethod]
     public void TestInvalidBirthday()
     {
-        Assert.ThrowsException<FormatException>(() => model.birthDay = "03-30-2005");
+        Assert.ThrowsException<FormatException>(() => model.birthday = "03-30-2005");
     }
 
     [TestMethod]
@@ -144,7 +144,7 @@ public class TestModel
     [TestMethod]
     public void TestNoBirthday()
     {
-        Assert.ThrowsException<Exception>(() => model.birthDay = "");
+        Assert.ThrowsException<Exception>(() => model.birthday = "");
     }
 
     [TestMethod]
@@ -304,65 +304,148 @@ public class TestDatabase
     private BasicInformation model;
     private Database db;
 
+    [ClassInitialize]
+    public static void classSetup(TestContext ctx)
+    {
+    }
+
     [TestInitialize]
     public void Setup()
     {
-        model = new BasicInformation();
         db = new Database();
-    }
-
-    [TestMethod]
-    public void TestDatabaseConn()
-    {
-        Assert.ThrowsException<Exception>(() =>
-        {
-            try
-            {
-                db.Connect("root");
-                throw new Exception();
-            }
-            catch { }
-        });
+        db.Connect("root");
+        model = new BasicInformation();
     }
 
     [TestMethod]
     public void TestDatabaseInsert()
     {
-        model.firstName = "jess mathew";
-        model.middleInitial = "p";
-        model.lastName = "evangelista";
+        model.firstName = "random first`";
+        model.middleInitial = "";
+        model.lastName = "random last";
         model.suffix = "";
-        model.birthDay = "2005-03-30";
+        model.birthday = "2005-03-30";
         model.houseNumber = "239 F.";
         model.street = "daclan private road";
         model.barangay = "punta princessa";
         model.city = "cebu city";
         model.province = "cebu";
         model.country = "philippines";
-        Assert.ThrowsException<Exception>(() =>
+        db.Insert(model);
+        MySqlDataReader data = db.Select(model.fullName);
+        BasicInformation newModel = new BasicInformation();
+        while (data.Read())
         {
-            try
+            newModel.firstName = (string)data["first_name"];
+            string middleInitial = "";
+            var dataMiddleInitial = data["middle_initial"];
+            if (dataMiddleInitial.GetType().Name != "DBNull")
             {
-                db.Connect("root");
-                db.Insert(model);
-                throw new Exception();
+                middleInitial = (string)dataMiddleInitial;
             }
-            catch { }
-        });
+            newModel.middleInitial = middleInitial;
+            newModel.lastName = (string)data["last_name"];
+            string suffix = "";
+            var dataSuffix = data["suffix"];
+            if (dataSuffix.GetType().Name != "DBNull")
+            {
+                suffix = (string)dataSuffix;
+            }
+            newModel.suffix = suffix;
+            newModel.birthday = Convert.ToDateTime(data["birthday"]).ToString("yyyy-MM-dd");
+            newModel.houseNumber = (string)data["house_number"];
+            newModel.street = (string)data["street_name"];
+            newModel.barangay = (string)data["barangay"];
+            newModel.city = (string)data["city"];
+            newModel.province = (string)data["province"];
+            newModel.country = (string)data["country"];
+        }
+        db.CloseReader(data);
+        db.Remove(model.fullName);
+        Assert.AreEqual(model.firstName, newModel.firstName);
+        Assert.AreEqual(model.middleInitial, newModel.middleInitial);
+        Assert.AreEqual(model.lastName, newModel.lastName);
+        Assert.AreEqual(model.suffix, newModel.suffix);
+        Assert.AreEqual(model.fullName, newModel.fullName);
+        Assert.AreEqual(model.birthday, newModel.birthday);
+        Assert.AreEqual(model.age, newModel.age);
+        Assert.AreEqual(model.houseNumber, newModel.houseNumber);
+        Assert.AreEqual(model.street, newModel.street);
+        Assert.AreEqual(model.barangay, newModel.barangay);
+        Assert.AreEqual(model.city, newModel.city);
+        Assert.AreEqual(model.province, newModel.province);
+        Assert.AreEqual(model.country, newModel.country);
     }
 
     [TestMethod]
     public void TestDatabaseSelect()
     {
-        Assert.ThrowsException<Exception>(() =>
+        try
         {
-            try
+            List<BasicInformation> models = new List<BasicInformation>();
+            MySqlDataReader data = db.Select(null);
+            while (data.Read())
             {
-                db.Connect("root");
-                db.Select();
-                throw new Exception();
+                BasicInformation model = new BasicInformation();
+                model.firstName = (string)data["first_name"];
+                string middleInitial = "";
+                var dataMiddleInitial = data["middle_initial"];
+                if (dataMiddleInitial.GetType().Name != "DBNull")
+                {
+                    middleInitial = (string)dataMiddleInitial;
+                }
+                model.middleInitial = middleInitial;
+                model.lastName = (string)data["last_name"];
+                string suffix = "";
+                var dataSuffix = data["suffix"];
+                if (dataSuffix.GetType().Name != "DBNull")
+                {
+                    suffix = (string)dataSuffix;
+                }
+                model.suffix = suffix;
+                model.birthday = Convert.ToDateTime(data["birthday"]).ToString("yyyy-MM-dd");
+                model.houseNumber = (string)data["house_number"];
+                model.street = (string)data["street_name"];
+                model.barangay = (string)data["barangay"];
+                model.city = (string)data["city"];
+                model.province = (string)data["province"];
+                model.country = (string)data["country"];
+                models.Add(model);
             }
-            catch { }
-        });
+            db.CloseReader(data);
+            var adults = (from model in models
+                          where model.age >= 18
+                          select model).Take(1).ToList();
+            BasicInformation actualModel = models[0];
+            BasicInformation expectedModel = new BasicInformation();
+            expectedModel.firstName = "jess mathew";
+            expectedModel.middleInitial = "p";
+            expectedModel.lastName = "evangelista";
+            expectedModel.birthday = "2005-03-30";
+            expectedModel.suffix = "";
+            expectedModel.houseNumber = "239 F.";
+            expectedModel.street = "daclan private road";
+            expectedModel.barangay = "punta princessa";
+            expectedModel.city = "cebu city";
+            expectedModel.province = "cebu";
+            expectedModel.country = "philippines";
+            Assert.AreEqual(expectedModel.firstName, actualModel.firstName);
+            Assert.AreEqual(expectedModel.middleInitial, actualModel.middleInitial);
+            Assert.AreEqual(expectedModel.lastName, actualModel.lastName);
+            Assert.AreEqual(expectedModel.suffix, actualModel.suffix);
+            Assert.AreEqual(expectedModel.fullName, actualModel.fullName);
+            Assert.AreEqual(expectedModel.birthday, actualModel.birthday);
+            Assert.AreEqual(expectedModel.age, actualModel.age);
+            Assert.AreEqual(expectedModel.houseNumber, actualModel.houseNumber);
+            Assert.AreEqual(expectedModel.street, actualModel.street);
+            Assert.AreEqual(expectedModel.barangay, actualModel.barangay);
+            Assert.AreEqual(expectedModel.city, actualModel.city);
+            Assert.AreEqual(expectedModel.province, actualModel.province);
+            Assert.AreEqual(expectedModel.country, actualModel.country);
+        }
+        catch
+        {
+            throw new Exception();
+        }
     }
 }
