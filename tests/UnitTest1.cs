@@ -1,5 +1,4 @@
 using basic_information_library.models;
-// using MySql.Data.MySqlClient;
 
 namespace Tests;
 

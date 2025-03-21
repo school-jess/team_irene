@@ -1,22 +1,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using basic_information_library.models;
 using System.Globalization;
 
-
-var host = Host.CreateApplicationBuilder();
-host.Services.AddDbContext<DatabaseCtx>((provider, options) =>
+var services = new ServiceCollection();
+var config = new ConfigurationBuilder().AddUserSecrets<Program>().Build();
+services.AddDbContext<DatabaseCtx>(option =>
 {
-    var config = provider.GetRequiredService<IConfiguration>();
-    var connectionString = config.GetConnectionString("DefaultConnection");
-
-    options.UseMySQL(connectionString);
+    option.UseMySQL(config["MYSQL_CONN_STR"]);
 });
-
-var app = host.Build();
-var scope = app.Services.CreateScope();
+var serviceProvider = services.BuildServiceProvider();
+var scope = serviceProvider.CreateScope();
 var dbCtx = scope.ServiceProvider.GetRequiredService<DatabaseCtx>();
 
 Console.Clear();
