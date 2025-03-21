@@ -71,11 +71,7 @@ while (true)
                             // Get birthdate and calculate age of the user
                             Console.Write("Enter Birthdate (yyyy-MM-dd): ");
                             string dateInput = Console.ReadLine() ?? DateTime.Now.ToString("yyyy-MM-dd");
-                            DateTime parsedDate;
-                            if (DateTime.TryParseExact(dateInput, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out parsedDate))
-                            {
-                                model.birthday = parsedDate;
-                            }
+                            DateTime parsedDate = DateTime.ParseExact(dateInput, "yyyy-MM-dd", CultureInfo.InvariantCulture);
 
                             // Get address details of the user
                             Console.Write("Enter House No.: ");
