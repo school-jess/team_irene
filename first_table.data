@@ -1,0 +1,64 @@
+-- MySQL dump 10.13  Distrib 8.0.41, for Linux (x86_64)
+--
+-- Host: localhost    Database: first_database
+-- ------------------------------------------------------
+-- Server version	8.0.41
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `first_table`
+--
+
+DROP TABLE IF EXISTS `first_table`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `first_table` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(20) NOT NULL,
+  `middle_initial` varchar(10) DEFAULT NULL,
+  `last_name` varchar(20) NOT NULL,
+  `suffix` varchar(10) DEFAULT NULL,
+  `full_name` varchar(255) DEFAULT NULL,
+  `birthday` date NOT NULL,
+  `age` int NOT NULL,
+  `house_number` varchar(10) NOT NULL,
+  `street_name` varchar(20) NOT NULL,
+  `barangay` varchar(20) NOT NULL,
+  `city` varchar(20) NOT NULL,
+  `country` varchar(20) NOT NULL,
+  `full_address` varchar(255) DEFAULT NULL,
+  `province` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `first_table`
+--
+
+LOCK TABLES `first_table` WRITE;
+/*!40000 ALTER TABLE `first_table` DISABLE KEYS */;
+INSERT INTO `first_table` VALUES (1,'Jess Mathew','P','Evangelista',NULL,'Jess Mathew P. Evangelista','2005-03-30',19,'239 F.','Daclan Private Road','Punta Princessa','Cebu City','Philippines','239 F. Daclan Private Road, Punta Princessa, Cebu City, Cebu, Philippines','Cebu'),(2,'Jan Michelle','P','Evangelista',NULL,'Jan Michelle P. Evangelista','2004-04-16',20,'239 F.','Daclan Private Road','Punta Princessa','Cebu City','Philippines','239 F. Daclan Private Road, Punta Princessa, Cebu City, Cebu, Philippines','Cebu'),(3,'Augustine','B','Tomkin','Sr','Augustine B. Tomkin Sr','2010-12-27',14,'96','Cherokee','Pasig','Giemdiem','Vietnam','96 Cherokee, Pasig, Giemdiem, Davao, Vietnam','Davao'),(4,'Isak','K','Dunkerk','IV','Isak K. Dunkerk IV','2010-07-02',14,'5','Dixom','Quezon City','Razgard','Bulgaria','5 Dixom, Quezon City, Razgard, Cebu, Bulgaria','Cebu'),(5,'Thor','N','Prozillo','III','Thor N. Prozillo III','2015-09-15',9,'47','Killdeer','Miskolc','Iloilo City','Hungary','47 Killdeer, Miskolc, Iloilo City, Cebu, Hungary','Cebu'),(6,'Jesselyn','T','Gianneschi','Jr','Jesselyn T. Gianneschi Jr','2016-12-22',8,'46','Grayhawk','Courbevoie','Cebu City','France','46 Grayhawk, Courbevoie, Cebu City, Manila, France','Manila'),(7,'Modestine','A','Westby','III','Modestine A. Westby III','2017-09-08',7,'9015','Green Ridge','Sidareja','Cebu City','Indonesia','9015 Green Ridge, Sidareja, Cebu City, Manila, Indonesia','Manila'),(8,'Boniface','Q','Dugget','Jr','Boniface Q. Dugget Jr','2000-08-14',24,'69627','Ridge Oak','La Palma','Makati','Mexico','69627 Ridge Oak, La Palma, Makati, Pampanga, Mexico','Pampanga'),(9,'Margareta','C','Wernham','II','Margareta C. Wernham II','2011-05-16',13,'1','Bellgrove','Aurora','Taguig','Philippines','1 Bellgrove, Aurora, Taguig, Cebu, Philippines','Cebu'),(10,'Hewie','V','Goldsbrough','Sr','Hewie V. Goldsbrough Sr','2001-01-04',24,'61','Cordelia','Zhiqu','Zhiqu','China','61 Cordelia, Zhiqu, Zhiqu, Iloilo, China','Iloilo'),(11,'Hewe','L','Sakins','Jr','Hewe L. Sakins Jr','2024-12-03',0,'26','Lakeland','Černošice','Taguig','Czech Republic','26 Lakeland, Černošice, Taguig, Manila, Czech Republic','Manila'),(12,'Adele','K','Tuberfield','Jr','Adele K. Tuberfield Jr','2012-04-06',12,'9617','Northland','Palma Soriano','Cagayan De Oro','Cuba','9617 Northland, Palma Soriano, Cagayan De Oro, Pampanga, Cuba','Pampanga');
+/*!40000 ALTER TABLE `first_table` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2025-03-21 13:36:03

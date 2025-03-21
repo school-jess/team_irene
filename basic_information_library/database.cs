@@ -3,13 +3,8 @@ using Microsoft.EntityFrameworkCore;
 
 public class DatabaseCtx : DbContext
 {
-    public DbSet<BasicInformation> PersonalDetails { get; set; }
+    public DbSet<BasicInformation> first_table { get; set; }
 
     public DatabaseCtx(DbContextOptions<DatabaseCtx> options) : base(options)
     { }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        base.OnModelCreating(modelBuilder);
-    }
 }

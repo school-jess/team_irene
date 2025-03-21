@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using MySql.EntityFrameworkCore.Metadata;
 
 #nullable disable
@@ -6,7 +7,7 @@ using MySql.EntityFrameworkCore.Metadata;
 namespace basic_information_library.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,26 +16,26 @@ namespace basic_information_library.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "PersonalDetails",
+                name: "first_table",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    firstName = table.Column<string>(type: "longtext", nullable: false),
-                    middleInitial = table.Column<string>(type: "longtext", nullable: false),
-                    lastName = table.Column<string>(type: "longtext", nullable: false),
+                    first_name = table.Column<string>(type: "longtext", nullable: false),
+                    middle_initial = table.Column<string>(type: "longtext", nullable: false),
+                    last_name = table.Column<string>(type: "longtext", nullable: false),
                     suffix = table.Column<string>(type: "longtext", nullable: false),
-                    birthday = table.Column<string>(type: "longtext", nullable: false),
-                    houseNumber = table.Column<string>(type: "longtext", nullable: false),
-                    street = table.Column<string>(type: "longtext", nullable: false),
+                    birthday = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    house_number = table.Column<string>(type: "longtext", nullable: false),
+                    street_name = table.Column<string>(type: "longtext", nullable: false),
                     barangay = table.Column<string>(type: "longtext", nullable: false),
                     city = table.Column<string>(type: "longtext", nullable: false),
-                    province = table.Column<string>(type: "longtext", nullable: false),
-                    country = table.Column<string>(type: "longtext", nullable: false)
+                    country = table.Column<string>(type: "longtext", nullable: false),
+                    province = table.Column<string>(type: "longtext", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PersonalDetails", x => x.id);
+                    table.PrimaryKey("PK_first_table", x => x.id);
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
         }
@@ -43,7 +44,7 @@ namespace basic_information_library.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "PersonalDetails");
+                name: "first_table");
         }
     }
 }

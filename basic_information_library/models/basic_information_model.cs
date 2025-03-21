@@ -3,7 +3,80 @@ namespace basic_information_library.models;
 public class BasicInformation
 {
     public int id { get; set; }
-    public string fullName
+
+    public string first_name
+    {
+        get => _firstName; set
+        {
+            if (value == "")
+            {
+                throw new Exception("Must provide first name input");
+            }
+            if (value.Any(char.IsDigit))
+            {
+                throw new Exception("Number inside of first name");
+            }
+            if (value.Length > 20)
+            {
+                throw new Exception("first name too long. Must be less than or equal to 20");
+            }
+            _firstName = Capitalize(value);
+        }
+    }
+
+    public string middle_initial
+    {
+        get => _middleInitial; set
+        {
+            if (value.Any(char.IsDigit))
+            {
+                throw new Exception("Number inside of middle initial");
+            }
+            if (value.Length > 10)
+            {
+                throw new Exception("middle initial too long. Must be less than or equal to 10");
+            }
+            _middleInitial = Capitalize(value);
+        }
+    }
+
+    public string last_name
+    {
+        get => _lastName; set
+        {
+            if (value == "")
+            {
+                throw new Exception("Must provide last name input");
+            }
+            if (value.Any(char.IsDigit))
+            {
+                throw new Exception("Number inside of last name");
+            }
+            if (value.Length > 20)
+            {
+                throw new Exception("last name too long. Must be less than or equal to 20");
+            }
+            _lastName = Capitalize(value);
+        }
+    }
+
+    public string suffix
+    {
+        get => _suffix; set
+        {
+            if (value.Any(char.IsDigit))
+            {
+                throw new Exception("Number inside of suffix");
+            }
+            if (value.Length > 10)
+            {
+                throw new Exception("suffix too long. Must be less than or equal to 10");
+            }
+            _suffix = value;
+        }
+    }
+
+    public string full_name
     {
         get
         {
@@ -25,6 +98,15 @@ public class BasicInformation
             return fullNameToRet;
         }
     }
+
+    public DateTime birthday
+    {
+        get => _birthDay; set
+        {
+            _birthDay = value;
+        }
+    }
+
     public int age
     {
         get
@@ -37,107 +119,8 @@ public class BasicInformation
             return age_shadow;
         }
     }
-    public string address
-    {
-        get
-        {
-            return $"{_houseNumber} {_street}, {_barangay}, {_city}, {_province}, {_country}";
-        }
-    }
 
-    public string firstName
-    {
-        get => _firstName; set
-        {
-            if (value == "")
-            {
-                throw new Exception("Must provide first name input");
-            }
-            if (value.Any(char.IsDigit))
-            {
-                throw new Exception("Number inside of first name");
-            }
-            if (value.Length > 20)
-            {
-                throw new Exception("first name too long. Must be less than or equal to 20");
-            }
-            _firstName = Capitalize(value);
-        }
-    }
-    private string _firstName;
-
-    public string middleInitial
-    {
-        get => _middleInitial; set
-        {
-            if (value.Any(char.IsDigit))
-            {
-                throw new Exception("Number inside of middle initial");
-            }
-            if (value.Length > 10)
-            {
-                throw new Exception("middle initial too long. Must be less than or equal to 10");
-            }
-            _middleInitial = Capitalize(value);
-        }
-    }
-
-    private string _middleInitial;
-
-    public string lastName
-    {
-        get => _lastName; set
-        {
-            if (value == "")
-            {
-                throw new Exception("Must provide last name input");
-            }
-            if (value.Any(char.IsDigit))
-            {
-                throw new Exception("Number inside of last name");
-            }
-            if (value.Length > 20)
-            {
-                throw new Exception("last name too long. Must be less than or equal to 20");
-            }
-            _lastName = Capitalize(value);
-        }
-    }
-    public string _lastName;
-
-    public string suffix
-    {
-        get => _suffix; set
-        {
-            if (value.Any(char.IsDigit))
-            {
-                throw new Exception("Number inside of suffix");
-            }
-            if (value.Length > 10)
-            {
-                throw new Exception("suffix too long. Must be less than or equal to 10");
-            }
-            _suffix = value;
-        }
-    }
-
-    private string _suffix;
-
-    public string birthday
-    {
-        get => _birthDay.ToString("yyyy-MM-dd"); set
-        {
-            if (value == "")
-            {
-                throw new Exception("Must provide birthday input");
-            }
-            string format = "yyyy-MM-dd";
-            _birthDay = DateTime.ParseExact(value, format, System.Globalization.CultureInfo.InvariantCulture);
-        }
-    }
-    public DateTime _birthDay;
-
-    public string houseNumber
+    public string house_number
     {
         get => _houseNumber; set
         {
@@ -152,9 +135,8 @@ public class BasicInformation
             _houseNumber = value;
         }
     }
-    private string _houseNumber;
 
-    public string street
+    public string street_name
     {
         get => _street; set
         {
@@ -173,7 +155,6 @@ public class BasicInformation
             _street = Capitalize(value);
         }
     }
-    private string _street;
 
     public string barangay
     {
@@ -195,7 +176,6 @@ public class BasicInformation
             _barangay = Capitalize(value);
         }
     }
-    private string _barangay;
 
     public string city
     {
@@ -217,7 +197,34 @@ public class BasicInformation
             _city = Capitalize(value);
         }
     }
-    private string _city;
+
+    public string country
+    {
+        get => _country; set
+        {
+            if (value == "")
+            {
+                throw new Exception("Must provide country input");
+            }
+            if (value.Any(char.IsDigit))
+            {
+                throw new Exception("Number inside of country");
+            }
+            if (value.Length > 20)
+            {
+                throw new Exception("suffix too long. Must be less than or equal to 20");
+            }
+            _country = Capitalize(value);
+        }
+    }
+
+    public string full_address
+    {
+        get
+        {
+            return $"{_houseNumber} {_street}, {_barangay}, {_city}, {_province}, {_country}";
+        }
+    }
 
     public string province
     {
@@ -240,27 +247,9 @@ public class BasicInformation
             _province = Capitalize(value);
         }
     }
-    private string _province;
-    public string country
-    {
-        get => _country; set
-        {
-            if (value == "")
-            {
-                throw new Exception("Must provide country input");
-            }
-            if (value.Any(char.IsDigit))
-            {
-                throw new Exception("Number inside of country");
-            }
-            if (value.Length > 20)
-            {
-                throw new Exception("suffix too long. Must be less than or equal to 20");
-            }
-            _country = Capitalize(value);
-        }
-    }
-    private string _country;
+
+    private string _firstName, _middleInitial, _lastName, _suffix, _houseNumber, _street, _barangay, _city, _province, _country;
+    public DateTime _birthDay;
 
     private static string Capitalize(string origStr)
     {

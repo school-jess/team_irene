@@ -17,8 +17,8 @@ public class TestModel
     [TestMethod]
     public void TestFirstName()
     {
-        model.firstName = "jess";
-        Assert.AreEqual("Jess", model.firstName);
+        model.first_name = "jess";
+        Assert.AreEqual("Jess", model.first_name);
     }
 
     [TestMethod]
@@ -31,8 +31,8 @@ public class TestModel
     [TestMethod]
     public void TestLastName()
     {
-        model.lastName = "evangelista";
-        Assert.AreEqual("Evangelista", model.lastName);
+        model.last_name = "evangelista";
+        Assert.AreEqual("Evangelista", model.last_name);
     }
 
     [TestMethod]
@@ -45,24 +45,24 @@ public class TestModel
     [TestMethod]
     public void TestFullName()
     {
-        model.firstName = "jess mathew";
+        model.first_name = "jess mathew";
         model.middleInitial = "";
-        model.lastName = "evangelista";
+        model.last_name = "evangelista";
         model.suffix = "";
         Assert.AreEqual("Jess Mathew Evangelista", model.fullName);
-        model.firstName = "jess mathew";
+        model.first_name = "jess mathew";
         model.middleInitial = "p";
-        model.lastName = "evangelista";
+        model.last_name = "evangelista";
         model.suffix = "";
         Assert.AreEqual("Jess Mathew P. Evangelista", model.fullName);
-        model.firstName = "jess mathew";
+        model.first_name = "jess mathew";
         model.middleInitial = "";
-        model.lastName = "evangelista";
+        model.last_name = "evangelista";
         model.suffix = "II";
         Assert.AreEqual("Jess Mathew Evangelista II", model.fullName);
-        model.firstName = "jess mathew";
+        model.first_name = "jess mathew";
         model.middleInitial = "p";
-        model.lastName = "evangelista";
+        model.last_name = "evangelista";
         model.suffix = "II";
         Assert.AreEqual("Jess Mathew P. Evangelista II", model.fullName);
     }
@@ -132,13 +132,13 @@ public class TestModel
     [TestMethod]
     public void TestNoFirstName()
     {
-        Assert.ThrowsException<Exception>(() => model.firstName = "");
+        Assert.ThrowsException<Exception>(() => model.first_name = "");
     }
 
     [TestMethod]
     public void TestNoLastName()
     {
-        Assert.ThrowsException<Exception>(() => model.lastName = "");
+        Assert.ThrowsException<Exception>(() => model.last_name = "");
     }
 
     [TestMethod]
@@ -240,7 +240,7 @@ public class TestModel
     [TestMethod]
     public void TestFirstNameTooLong()
     {
-        Assert.ThrowsException<Exception>(() => model.firstName = "aaaaaaaaaaaaaaaaaaaaa");
+        Assert.ThrowsException<Exception>(() => model.first_name = "aaaaaaaaaaaaaaaaaaaaa");
     }
 
     [TestMethod]
@@ -252,7 +252,7 @@ public class TestModel
     [TestMethod]
     public void TestLastNameTooLong()
     {
-        Assert.ThrowsException<Exception>(() => model.lastName = "aaaaaaaaaaaaaaaaaaaaa");
+        Assert.ThrowsException<Exception>(() => model.last_name = "aaaaaaaaaaaaaaaaaaaaa");
     }
 
     [TestMethod]
@@ -320,9 +320,9 @@ public class TestDatabase
     [TestMethod]
     public void TestDatabaseInsert()
     {
-        model.firstName = "random first`";
+        model.first_name = "random first`";
         model.middleInitial = "";
-        model.lastName = "random last";
+        model.last_name = "random last";
         model.suffix = "";
         model.birthday = "2005-03-30";
         model.houseNumber = "239 F.";
@@ -336,7 +336,7 @@ public class TestDatabase
         BasicInformation newModel = new BasicInformation();
         while (data.Read())
         {
-            newModel.firstName = (string)data["first_name"];
+            newModel.first_name = (string)data["first_name"];
             string middleInitial = "";
             var dataMiddleInitial = data["middle_initial"];
             if (dataMiddleInitial.GetType().Name != "DBNull")
@@ -344,7 +344,7 @@ public class TestDatabase
                 middleInitial = (string)dataMiddleInitial;
             }
             newModel.middleInitial = middleInitial;
-            newModel.lastName = (string)data["last_name"];
+            newModel.last_name = (string)data["last_name"];
             string suffix = "";
             var dataSuffix = data["suffix"];
             if (dataSuffix.GetType().Name != "DBNull")
@@ -362,9 +362,9 @@ public class TestDatabase
         }
         db.CloseReader(data);
         db.Remove(model.fullName);
-        Assert.AreEqual(model.firstName, newModel.firstName);
+        Assert.AreEqual(model.first_name, newModel.first_name);
         Assert.AreEqual(model.middleInitial, newModel.middleInitial);
-        Assert.AreEqual(model.lastName, newModel.lastName);
+        Assert.AreEqual(model.last_name, newModel.last_name);
         Assert.AreEqual(model.suffix, newModel.suffix);
         Assert.AreEqual(model.fullName, newModel.fullName);
         Assert.AreEqual(model.birthday, newModel.birthday);
@@ -387,7 +387,7 @@ public class TestDatabase
             while (data.Read())
             {
                 BasicInformation model = new BasicInformation();
-                model.firstName = (string)data["first_name"];
+                model.first_name = (string)data["first_name"];
                 string middleInitial = "";
                 var dataMiddleInitial = data["middle_initial"];
                 if (dataMiddleInitial.GetType().Name != "DBNull")
@@ -395,7 +395,7 @@ public class TestDatabase
                     middleInitial = (string)dataMiddleInitial;
                 }
                 model.middleInitial = middleInitial;
-                model.lastName = (string)data["last_name"];
+                model.last_name = (string)data["last_name"];
                 string suffix = "";
                 var dataSuffix = data["suffix"];
                 if (dataSuffix.GetType().Name != "DBNull")
@@ -418,9 +418,9 @@ public class TestDatabase
                           select model).Take(1).ToList();
             BasicInformation actualModel = models[0];
             BasicInformation expectedModel = new BasicInformation();
-            expectedModel.firstName = "jess mathew";
+            expectedModel.first_name = "jess mathew";
             expectedModel.middleInitial = "p";
-            expectedModel.lastName = "evangelista";
+            expectedModel.last_name = "evangelista";
             expectedModel.birthday = "2005-03-30";
             expectedModel.suffix = "";
             expectedModel.houseNumber = "239 F.";
@@ -429,9 +429,9 @@ public class TestDatabase
             expectedModel.city = "cebu city";
             expectedModel.province = "cebu";
             expectedModel.country = "philippines";
-            Assert.AreEqual(expectedModel.firstName, actualModel.firstName);
+            Assert.AreEqual(expectedModel.first_name, actualModel.first_name);
             Assert.AreEqual(expectedModel.middleInitial, actualModel.middleInitial);
-            Assert.AreEqual(expectedModel.lastName, actualModel.lastName);
+            Assert.AreEqual(expectedModel.last_name, actualModel.last_name);
             Assert.AreEqual(expectedModel.suffix, actualModel.suffix);
             Assert.AreEqual(expectedModel.fullName, actualModel.fullName);
             Assert.AreEqual(expectedModel.birthday, actualModel.birthday);
