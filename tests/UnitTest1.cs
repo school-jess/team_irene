@@ -355,43 +355,36 @@ public class TestDatabase
     [TestMethod]
     public void TestDatabaseSelect()
     {
-        try
-        {
-            List<BasicInformation> models = dbCtx.first_table.ToList();
-            var adults = (from model in models
-                          where model.age >= 18
-                          select model).Take(1).ToList();
-            BasicInformation actualModel = models[0];
-            BasicInformation expectedModel = new BasicInformation();
-            expectedModel.first_name = "jess mathew";
-            expectedModel.middle_initial = "p";
-            expectedModel.last_name = "evangelista";
-            expectedModel.birthday = DateTime.ParseExact("2005-03-30", "yyyy-MM-dd", CultureInfo.InvariantCulture);
-            expectedModel.suffix = "";
-            expectedModel.house_number = "239 F.";
-            expectedModel.street_name = "daclan private road";
-            expectedModel.barangay = "punta princessa";
-            expectedModel.city = "cebu city";
-            expectedModel.province = "cebu";
-            expectedModel.country = "philippines";
-            Assert.AreEqual(expectedModel.first_name, actualModel.first_name);
-            Assert.AreEqual(expectedModel.middle_initial, actualModel.middle_initial);
-            Assert.AreEqual(expectedModel.last_name, actualModel.last_name);
-            Assert.AreEqual(expectedModel.suffix, actualModel.suffix);
-            Assert.AreEqual(expectedModel.full_name, actualModel.full_name);
-            Assert.AreEqual(expectedModel.birthday, actualModel.birthday);
-            Assert.AreEqual(expectedModel.age, actualModel.age);
-            Assert.AreEqual(expectedModel.house_number, actualModel.house_number);
-            Assert.AreEqual(expectedModel.street_name, actualModel.street_name);
-            Assert.AreEqual(expectedModel.barangay, actualModel.barangay);
-            Assert.AreEqual(expectedModel.city, actualModel.city);
-            Assert.AreEqual(expectedModel.province, actualModel.province);
-            Assert.AreEqual(expectedModel.country, actualModel.country);
-        }
-        catch
-        {
-            throw new Exception();
-        }
+        List<BasicInformation> models = dbCtx.first_table.ToList();
+        var adults = (from model in models
+                      where model.age >= 18
+                      select model).Take(1).ToList();
+        BasicInformation actualModel = models[0];
+        BasicInformation expectedModel = new BasicInformation();
+        expectedModel.first_name = "jess mathew";
+        expectedModel.middle_initial = "p";
+        expectedModel.last_name = "evangelista";
+        expectedModel.birthday = DateTime.ParseExact("2005-03-30", "yyyy-MM-dd", CultureInfo.InvariantCulture);
+        expectedModel.suffix = "";
+        expectedModel.house_number = "239 F.";
+        expectedModel.street_name = "daclan private road";
+        expectedModel.barangay = "punta princessa";
+        expectedModel.city = "cebu city";
+        expectedModel.province = "cebu";
+        expectedModel.country = "philippines";
+        Assert.AreEqual(expectedModel.first_name, actualModel.first_name);
+        Assert.AreEqual(expectedModel.middle_initial, actualModel.middle_initial);
+        Assert.AreEqual(expectedModel.last_name, actualModel.last_name);
+        Assert.AreEqual(expectedModel.suffix, actualModel.suffix);
+        Assert.AreEqual(expectedModel.full_name, actualModel.full_name);
+        Assert.AreEqual(expectedModel.birthday, actualModel.birthday);
+        Assert.AreEqual(expectedModel.age, actualModel.age);
+        Assert.AreEqual(expectedModel.house_number, actualModel.house_number);
+        Assert.AreEqual(expectedModel.street_name, actualModel.street_name);
+        Assert.AreEqual(expectedModel.barangay, actualModel.barangay);
+        Assert.AreEqual(expectedModel.city, actualModel.city);
+        Assert.AreEqual(expectedModel.province, actualModel.province);
+        Assert.AreEqual(expectedModel.country, actualModel.country);
     }
 
     [TestCleanup]
