@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using pos_library;
 
@@ -10,9 +11,11 @@ using pos_library;
 namespace pos_library.Migrations
 {
     [DbContext(typeof(DatabaseCtx))]
-    partial class DatabaseCtxModelSnapshot : ModelSnapshot
+    [Migration("20250411120026_UpdatedInventoryTable")]
+    partial class UpdatedInventoryTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -139,23 +142,7 @@ namespace pos_library.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("customer_id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("employee_id")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("sale_date")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<decimal>("total_amount")
-                        .HasColumnType("decimal(6,2)");
-
                     b.HasKey("sale_id");
-
-                    b.HasIndex("customer_id");
-
-                    b.HasIndex("employee_id");
 
                     b.ToTable("Sale");
                 });
@@ -166,23 +153,7 @@ namespace pos_library.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("product_id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("quantity")
-                        .HasColumnType("int");
-
-                    b.Property<int>("sale_id")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("unit_price")
-                        .HasColumnType("decimal(18,2)");
-
                     b.HasKey("sales_detail_id");
-
-                    b.HasIndex("product_id");
-
-                    b.HasIndex("sale_id");
 
                     b.ToTable("SaleDetail");
                 });
@@ -196,44 +167,6 @@ namespace pos_library.Migrations
                         .IsRequired();
 
                     b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("pos_library.models.Sale", b =>
-                {
-                    b.HasOne("pos_library.models.Customers", "Customer")
-                        .WithMany()
-                        .HasForeignKey("customer_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("pos_library.models.Employee", "Employee")
-                        .WithMany()
-                        .HasForeignKey("employee_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-
-                    b.Navigation("Employee");
-                });
-
-            modelBuilder.Entity("pos_library.models.SaleDetail", b =>
-                {
-                    b.HasOne("pos_library.models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("product_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("pos_library.models.Sale", "Sale")
-                        .WithMany()
-                        .HasForeignKey("sale_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-
-                    b.Navigation("Sale");
                 });
 #pragma warning restore 612, 618
         }
