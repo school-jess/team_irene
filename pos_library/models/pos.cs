@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace pos_library.models;
 
-public class Customers
+public class Customer
 {
     [Key]
     public int customer_id
@@ -71,14 +71,14 @@ public class Sale
         }
     }
     private int _saleId;
-    public virtual Customers Customer
+    public virtual Customer Customer
     {
         get => _Customer; set
         {
             _Customer = value;
         }
     }
-    private Customers _Customer;
+    private Customer _Customer;
     public virtual Employee Employee
     {
         get => _Employee; set

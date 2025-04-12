@@ -6,7 +6,7 @@ namespace pos_library;
 
 public class DatabaseCtx : DbContext
 {
-    public DbSet<Customers> Customers { get; set; }
+    public DbSet<Customer> Customer { get; set; }
     public DbSet<Sale> Sale { get; set; }
     public DbSet<Employee> Employee { get; set; }
     public DbSet<SaleDetail> SaleDetail { get; set; }

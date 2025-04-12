@@ -1,6 +1,0 @@
-@pos_webapi_HostAddress = http://localhost:5153
-
-GET {{pos_webapi_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
