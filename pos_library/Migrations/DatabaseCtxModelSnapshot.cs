@@ -50,7 +50,7 @@ namespace pos_library.Migrations
 
                     b.HasKey("customer_id");
 
-                    b.ToTable("Customer");
+                    b.ToTable("Customer", (string)null);
                 });
 
             modelBuilder.Entity("pos_library.models.Employee", b =>
@@ -82,7 +82,7 @@ namespace pos_library.Migrations
 
                     b.HasKey("employee_id");
 
-                    b.ToTable("Employee");
+                    b.ToTable("Employee", (string)null);
                 });
 
             modelBuilder.Entity("pos_library.models.Inventory", b =>
@@ -104,7 +104,7 @@ namespace pos_library.Migrations
 
                     b.HasIndex("product_id");
 
-                    b.ToTable("Inventory");
+                    b.ToTable("Inventory", (string)null);
                 });
 
             modelBuilder.Entity("pos_library.models.Product", b =>
@@ -130,7 +130,7 @@ namespace pos_library.Migrations
 
                     b.HasKey("product_id");
 
-                    b.ToTable("Product");
+                    b.ToTable("Product", (string)null);
                 });
 
             modelBuilder.Entity("pos_library.models.Sale", b =>
@@ -157,7 +157,7 @@ namespace pos_library.Migrations
 
                     b.HasIndex("employee_id");
 
-                    b.ToTable("Sale");
+                    b.ToTable("Sale", (string)null);
                 });
 
             modelBuilder.Entity("pos_library.models.SaleDetail", b =>
@@ -184,7 +184,7 @@ namespace pos_library.Migrations
 
                     b.HasIndex("sale_id");
 
-                    b.ToTable("SaleDetail");
+                    b.ToTable("SaleDetail", (string)null);
                 });
 
             modelBuilder.Entity("pos_library.models.Inventory", b =>

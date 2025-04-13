@@ -6,6 +6,7 @@ namespace pos_library.models;
 public class Customer
 {
     [Key]
+    [Required]
     public int customer_id
     {
         get => _customerId; set
@@ -15,6 +16,7 @@ public class Customer
     }
     private int _customerId;
     [MaxLength(20)]
+    [Required]
     public string first_name
     {
         get => _firstName; set
@@ -24,6 +26,7 @@ public class Customer
     }
     private string _firstName;
     [MaxLength(20)]
+    [Required]
     public string last_name
     {
         get => _lastName; set
@@ -33,6 +36,7 @@ public class Customer
     }
     private string _lastName;
     [MaxLength(255)]
+    [Required]
     public string email
     {
         get => _email; set
@@ -63,6 +67,7 @@ public class Customer
 public class Sale
 {
     [Key]
+    [Required]
     public int sale_id
     {
         get => _saleId; set
@@ -71,6 +76,7 @@ public class Sale
         }
     }
     private int _saleId;
+    [Required]
     public virtual Customer Customer
     {
         get => _Customer; set
@@ -78,6 +84,7 @@ public class Sale
             _Customer = value;
         }
     }
+    [Required]
     private Customer _Customer;
     public virtual Employee Employee
     {
@@ -95,6 +102,7 @@ public class Sale
         }
     }
     private DateTime _saleDate;
+    [Required]
     [Column(TypeName = "decimal(6,2)")]
     public decimal total_amount
     {
@@ -109,6 +117,7 @@ public class Sale
 public class Employee
 {
     [Key]
+    [Required]
     public int employee_id
     {
         get => _employeeId; set
@@ -118,6 +127,7 @@ public class Employee
     }
     private int _employeeId;
     [MaxLength(20)]
+    [Required]
     public string first_name
     {
         get => _firstName; set
@@ -127,6 +137,7 @@ public class Employee
     }
     private string _firstName;
     [MaxLength(20)]
+    [Required]
     public string last_name
     {
         get => _lastName; set
@@ -166,14 +177,16 @@ public class Employee
 public class SaleDetail
 {
     [Key]
-    public int sales_detail_id
+    [Required]
+    public int sale_detail_id
     {
-        get => _salesDetailId; set
+        get => _saleDetailId; set
         {
-            _salesDetailId = value;
+            _saleDetailId = value;
         }
     }
-    private int _salesDetailId;
+    private int _saleDetailId;
+    [Required]
     public virtual Sale Sale
     {
         get => _Sale; set
@@ -182,6 +195,7 @@ public class SaleDetail
         }
     }
     private Sale _Sale;
+    [Required]
     public virtual Product Product
     {
         get => _Product; set
@@ -190,6 +204,7 @@ public class SaleDetail
         }
     }
     private Product _Product;
+    [Required]
     public int quantity
     {
         get => _quantity; set
@@ -198,6 +213,8 @@ public class SaleDetail
         }
     }
     private int _quantity;
+    [Column(TypeName = "decimal(6,2)")]
+    [Required]
     public decimal unit_price
     {
         get => _unitPrice; set

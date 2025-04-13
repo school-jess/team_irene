@@ -7,10 +7,10 @@ namespace pos_webapi.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class SaleController : ControllerBase
+public class SaleDetailController : ControllerBase
 {
     private readonly DatabaseCtx _dbCtx;
-    public SaleController(DatabaseCtx dbCtx)
+    public SaleDetailController(DatabaseCtx dbCtx)
     {
         _dbCtx = dbCtx;
     }
@@ -22,28 +22,28 @@ public class SaleController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult<Sale> Post(Sale sale)
+    public ActionResult<SaleDetail> Post(SaleDetail saleDetail)
     {
-        _dbCtx.Sale.Add(sale);
+        _dbCtx.SaleDetail.Add(saleDetail);
         _dbCtx.SaveChanges();
-        return CreatedAtAction(nameof(Get), new { id = sale.sale_id }, sale);
+        return CreatedAtAction(nameof(Get), new { id = saleDetail.sale_detail_id }, saleDetail);
     }
 
     [HttpPut("{id}")]
-    public IActionResult Put(int id, Sale sale)
+    public IActionResult Put(int id, SaleDetail saleDetail)
     {
-        if (id != sale.sale_id)
+        if (id != saleDetail.sale_detail_id)
         {
             return BadRequest();
         }
-        _dbCtx.Entry(sale).State = EntityState.Modified;
+        _dbCtx.Entry(saleDetail).State = EntityState.Modified;
         try
         {
             _dbCtx.SaveChanges();
         }
         catch (DbUpdateException)
         {
-            if (!_dbCtx.Sale.Any(sale => sale.sale_id == id))
+            if (!_dbCtx.SaleDetail.Any(sale => sale.sale_detail_id == id))
             {
                 return NotFound();
             }
@@ -58,12 +58,12 @@ public class SaleController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        var sale = _dbCtx.Sale.Find(id);
+        var sale = _dbCtx.SaleDetail.Find(id);
         if (sale == null)
         {
             return NotFound();
         }
-        _dbCtx.Sale.Remove(sale);
+        _dbCtx.SaleDetail.Remove(sale);
         _dbCtx.SaveChanges();
         return NoContent();
     }

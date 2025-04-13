@@ -1,6 +1,7 @@
 using pos_library.models;
 using pos_library;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace pos_webapi.Controllers;
 
@@ -28,18 +29,42 @@ public class CustomerController : ControllerBase
         return CreatedAtAction(nameof(Get), new { id = customer.customer_id }, customer);
     }
 
-    [HttpPut]
-    public void Put()
+    [HttpPut("{id}")]
+    public IActionResult Put(int id, Customer customer)
     {
+        if (id != customer.customer_id)
+        {
+            return BadRequest();
+        }
+        _dbCtx.Entry(customer).State = EntityState.Modified;
+        try
+        {
+            _dbCtx.SaveChanges();
+        }
+        catch (DbUpdateException)
+        {
+            if (!_dbCtx.Customer.Any(customer => customer.customer_id == id))
+            {
+                return NotFound();
+            }
+            else
+            {
+                throw;
+            }
+        }
+        return NoContent();
     }
 
-    [HttpPatch]
-    public void Patch()
+    [HttpDelete("{id}")]
+    public IActionResult Delete(int id)
     {
-    }
-
-    [HttpDelete]
-    public void Delete()
-    {
+        var customer = _dbCtx.Customer.Find(id);
+        if (customer == null)
+        {
+            return NotFound();
+        }
+        _dbCtx.Customer.Remove(customer);
+        _dbCtx.SaveChanges();
+        return NoContent();
     }
 }
