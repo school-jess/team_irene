@@ -80,7 +80,7 @@ public class TestModel
     public void TestAge()
     {
         model.birthday = DateTime.ParseExact("2005-03-30", "yyyy-MM-dd", CultureInfo.InvariantCulture);
-        Assert.AreEqual(19, model.age);
+        Assert.AreEqual(20, model.age);
     }
 
     [TestMethod]
@@ -335,7 +335,7 @@ public class TestDatabase
         model.country = "philippines";
         dbCtx.first_table.Add(model);
         dbCtx.SaveChanges();
-        var savedPersonalDetail = dbCtx.first_table.First(personalDetail => personalDetail.full_name == model.full_name);
+        var savedPersonalDetail = dbCtx.first_table.FirstOrDefault(personalDetail => personalDetail.id == model.id);
         Assert.IsNotNull(savedPersonalDetail);
         Assert.AreEqual(model.first_name, savedPersonalDetail.first_name);
         Assert.AreEqual(model.middle_initial, savedPersonalDetail.middle_initial);
@@ -355,11 +355,24 @@ public class TestDatabase
     [TestMethod]
     public void TestDatabaseSelect()
     {
+        model.first_name = "jess mathew";
+        model.middle_initial = "p";
+        model.last_name = "evangelista";
+        model.suffix = "";
+        model.birthday = DateTime.ParseExact("2005-03-30", "yyyy-MM-dd", CultureInfo.InvariantCulture);
+        model.house_number = "239 F.";
+        model.street_name = "daclan private road";
+        model.barangay = "punta princessa";
+        model.city = "cebu city";
+        model.province = "cebu";
+        model.country = "philippines";
+        dbCtx.first_table.Add(model);
+        dbCtx.SaveChanges();
         List<BasicInformation> models = dbCtx.first_table.ToList();
         var adults = (from model in models
                       where model.age >= 18
                       select model).Take(1).ToList();
-        BasicInformation actualModel = models[0];
+        BasicInformation actualModel = adults[0];
         BasicInformation expectedModel = new BasicInformation();
         expectedModel.first_name = "jess mathew";
         expectedModel.middle_initial = "p";
