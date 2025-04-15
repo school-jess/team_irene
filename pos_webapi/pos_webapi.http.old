@@ -1,0 +1,93 @@
+@pos_webapi_HostAddress = http://localhost:5153
+
+GET {{post_webapi_HostAddress}}/customers/
+Accept: application/json
+
+POST {{post_webapi_HostAddress}}/new/customer/
+Accept: application/json
+
+PUT {{post_webapi_HostAddress}}/change/customer/
+Accept: application/json
+
+PATCH {{post_webapi_HostAddress}}/update/customer/
+Accept: application/json
+
+DELETE {{post_webapi_HostAddress}}/delete/customer/
+Accept: application/json
+
+GET {{post_webapi_HostAddress}}/sales/
+Accept: application/json
+
+POST {{post_webapi_HostAddress}}/new/sale/
+Accept: application/json
+
+PUT {{post_webapi_HostAddress}}/change/sale/
+Accept: application/json
+
+PATCH {{post_webapi_HostAddress}}/update/sale/
+Accept: application/json
+
+DELETE {{post_webapi_HostAddress}}/delete/sale/
+Accept: application/json
+
+GET {{post_webapi_HostAddress}}/employees/
+Accept: application/json
+
+POST {{post_webapi_HostAddress}}/new/employee/
+Accept: application/json
+
+PUT {{post_webapi_HostAddress}}/change/employee/
+Accept: application/json
+
+PATCH {{post_webapi_HostAddress}}/update/employee/
+Accept: application/json
+
+DELETE {{post_webapi_HostAddress}}/delete/employee/
+Accept: application/json
+
+GET {{post_webapi_HostAddress}}/saleDetails/
+Accept: application/json
+
+POST {{post_webapi_HostAddress}}/new/saleDetail/
+Accept: application/json
+
+PUT {{post_webapi_HostAddress}}/change/saleDetail/
+Accept: application/json
+
+PATCH {{post_webapi_HostAddress}}/update/saleDetail/
+Accept: application/json
+
+DELETE {{post_webapi_HostAddress}}/delete/saleDetail/
+Accept: application/json
+
+GET {{post_webapi_HostAddress}}/products/
+Accept: application/json
+
+POST {{post_webapi_HostAddress}}/new/product/
+Accept: application/json
+
+PUT {{post_webapi_HostAddress}}/change/product/
+Accept: application/json
+
+PATCH {{post_webapi_HostAddress}}/update/product/
+Accept: application/json
+
+DELETE {{post_webapi_HostAddress}}/delete/product/
+Accept: application/json
+
+GET {{post_webapi_HostAddress}}/inventory/
+Accept: application/json
+
+POST {{post_webapi_HostAddress}}/new/inventory/
+Accept: application/json
+
+PUT {{post_webapi_HostAddress}}/change/inventory/
+Accept: application/json
+
+PATCH {{post_webapi_HostAddress}}/update/inventory/
+Accept: application/json
+
+DELETE {{post_webapi_HostAddress}}/delete/inventory/
+Accept: application/json
+
+###

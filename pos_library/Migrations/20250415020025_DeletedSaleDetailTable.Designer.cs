@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using pos_library;
 
@@ -10,9 +11,11 @@ using pos_library;
 namespace pos_library.Migrations
 {
     [DbContext(typeof(DatabaseCtx))]
-    partial class DatabaseCtxModelSnapshot : ModelSnapshot
+    [Migration("20250415020025_DeletedSaleDetailTable")]
+    partial class DeletedSaleDetailTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -174,33 +177,6 @@ namespace pos_library.Migrations
                     b.ToTable("Sale");
                 });
 
-            modelBuilder.Entity("pos_library.models.SaleDetail", b =>
-                {
-                    b.Property<int>("sale_detail_id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("product_id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("quantity")
-                        .HasColumnType("int");
-
-                    b.Property<int>("sale_id")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("unit_price")
-                        .HasColumnType("decimal(6,2)");
-
-                    b.HasKey("sale_detail_id");
-
-                    b.HasIndex("product_id");
-
-                    b.HasIndex("sale_id");
-
-                    b.ToTable("SaleDetail");
-                });
-
             modelBuilder.Entity("pos_library.models.Inventory", b =>
                 {
                     b.HasOne("pos_library.models.Product", "Product")
@@ -229,25 +205,6 @@ namespace pos_library.Migrations
                     b.Navigation("Customer");
 
                     b.Navigation("Employee");
-                });
-
-            modelBuilder.Entity("pos_library.models.SaleDetail", b =>
-                {
-                    b.HasOne("pos_library.models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("product_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("pos_library.models.Sale", "Sale")
-                        .WithMany()
-                        .HasForeignKey("sale_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-
-                    b.Navigation("Sale");
                 });
 #pragma warning restore 612, 618
         }

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using pos_library;
 
@@ -10,9 +11,11 @@ using pos_library;
 namespace pos_library.Migrations
 {
     [DbContext(typeof(DatabaseCtx))]
-    partial class DatabaseCtxModelSnapshot : ModelSnapshot
+    [Migration("20250413053354_MatchedCodeToERD")]
+    partial class MatchedCodeToERD
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,12 +29,14 @@ namespace pos_library.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("created_at")
-                        .HasColumnType("timestamp");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("email")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar(255)")
+                        .HasDefaultValue("04/13/2025 13:33:52");
 
                     b.Property<string>("first_name")
                         .IsRequired()
@@ -64,8 +69,8 @@ namespace pos_library.Migrations
 
                     b.Property<DateTime>("created_at")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+                        .HasColumnType("datetime(6)")
+                        .HasDefaultValue(new DateTime(2025, 4, 13, 13, 33, 52, 766, DateTimeKind.Local).AddTicks(1173));
 
                     b.Property<string>("first_name")
                         .IsRequired()
@@ -98,8 +103,8 @@ namespace pos_library.Migrations
 
                     b.Property<DateTime>("last_updated")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+                        .HasColumnType("datetime(6)")
+                        .HasDefaultValue(new DateTime(2025, 4, 13, 13, 33, 52, 766, DateTimeKind.Local).AddTicks(4831));
 
                     b.Property<int>("product_id")
                         .HasColumnType("int");
@@ -126,8 +131,8 @@ namespace pos_library.Migrations
 
                     b.Property<DateTime>("created_at")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+                        .HasColumnType("datetime(6)")
+                        .HasDefaultValue(new DateTime(2025, 4, 13, 13, 33, 52, 766, DateTimeKind.Local).AddTicks(3030));
 
                     b.Property<decimal>("price")
                         .HasColumnType("decimal(6,2)");
@@ -159,8 +164,8 @@ namespace pos_library.Migrations
 
                     b.Property<DateTime>("sale_date")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+                        .HasColumnType("datetime(6)")
+                        .HasDefaultValue(new DateTime(2025, 4, 13, 13, 33, 52, 765, DateTimeKind.Local).AddTicks(8223));
 
                     b.Property<decimal>("total_amount")
                         .HasColumnType("decimal(6,2)");

@@ -54,6 +54,7 @@ public class Customer
         }
     }
     private string _phoneNumber;
+    [Column(TypeName = "timestamp")]
     public DateTime created_at
     {
         get => _createdAt; set
@@ -94,6 +95,7 @@ public class Sale
         }
     }
     private Employee _Employee;
+    [Column(TypeName = "timestamp")]
     public DateTime sale_date
     {
         get => _saleDate; set
@@ -164,6 +166,7 @@ public class Employee
         }
     }
     private DateTime _hireDate;
+    [Column(TypeName = "timestamp")]
     public DateTime created_at
     {
         get => _createdAt; set
@@ -228,6 +231,7 @@ public class SaleDetail
 public class Product
 {
     [Key]
+    [Required]
     public int product_id
     {
         get => _productId; set
@@ -237,6 +241,7 @@ public class Product
     }
     private int _productId;
     [MaxLength(30)]
+    [Required]
     public string product_name
     {
         get => _productName; set
@@ -255,6 +260,7 @@ public class Product
     }
     private string? _category;
     [Column(TypeName = "decimal(6,2)")]
+    [Required]
     public decimal price
     {
         get => _price; set
@@ -263,6 +269,7 @@ public class Product
         }
     }
     private decimal _price;
+    [Required]
     public int stock_quality
     {
         get => _stockQuality; set
@@ -271,11 +278,21 @@ public class Product
         }
     }
     private int _stockQuality;
+    [Column(TypeName = "timestamp")]
+    public DateTime created_at
+    {
+        get => _createdAt; set
+        {
+            _createdAt = value;
+        }
+    }
+    private DateTime _createdAt;
 }
 
 public class Inventory
 {
     [Key]
+    [Required]
     public int inventory_id
     {
         get => _inventoryId; set
@@ -284,6 +301,7 @@ public class Inventory
         }
     }
     private int _inventoryId;
+    [Required]
     public virtual Product Product
     {
         get => _Product; set
@@ -292,6 +310,7 @@ public class Inventory
         }
     }
     private Product _Product;
+    [Required]
     public int quantity
     {
         get => _quantity; set
@@ -300,6 +319,7 @@ public class Inventory
         }
     }
     private int _quantity;
+    [Column(TypeName = "timestamp")]
     public DateTime last_updated
     {
         get => _lastUpdated; set

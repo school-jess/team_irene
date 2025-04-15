@@ -15,4 +15,24 @@ public class DatabaseCtx : DbContext
 
     public DatabaseCtx(DbContextOptions<DatabaseCtx> options) : base(options)
     { }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Customer>()
+            .HasIndex(p => p.email)
+            .IsUnique();
+        modelBuilder.Entity<Sale>()
+            .Property(e => e.sale_date)
+            .HasDefaultValueSql("CURRENT_TIMESTAMP");
+        modelBuilder.Entity<Employee>()
+            .Property(e => e.created_at)
+            .HasDefaultValueSql("CURRENT_TIMESTAMP");
+        modelBuilder.Entity<Product>()
+            .Property(e => e.created_at)
+            .HasDefaultValueSql("CURRENT_TIMESTAMP");
+        modelBuilder.Entity<Inventory>()
+            .Property(e => e.last_updated)
+            .HasDefaultValueSql("CURRENT_TIMESTAMP");
+        base.OnModelCreating(modelBuilder);
+    }
 }
