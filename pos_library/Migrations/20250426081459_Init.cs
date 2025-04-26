@@ -7,7 +7,7 @@ using MySql.EntityFrameworkCore.Metadata;
 namespace pos_library.Migrations
 {
     /// <inheritdoc />
-    public partial class InitSchema : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -104,7 +104,7 @@ namespace pos_library.Migrations
                 {
                     inventory_id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    product_key = table.Column<int>(type: "int", nullable: false),
+                    product_id = table.Column<int>(type: "int", nullable: false),
                     quantity = table.Column<int>(type: "int", nullable: false),
                     last_updated = table.Column<DateTime>(type: "timestamp", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
                 },
@@ -112,8 +112,8 @@ namespace pos_library.Migrations
                 {
                     table.PrimaryKey("PK_Inventory", x => x.inventory_id);
                     table.ForeignKey(
-                        name: "FK_Inventory_Product_product_key",
-                        column: x => x.product_key,
+                        name: "FK_Inventory_Product_product_id",
+                        column: x => x.product_id,
                         principalTable: "Product",
                         principalColumn: "product_id",
                         onDelete: ReferentialAction.Cascade);
@@ -156,9 +156,9 @@ namespace pos_library.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Inventory_product_key",
+                name: "IX_Inventory_product_id",
                 table: "Inventory",
-                column: "product_key");
+                column: "product_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Sale_customer_id",

@@ -11,8 +11,8 @@ using pos_library;
 namespace pos_library.Migrations
 {
     [DbContext(typeof(DatabaseCtx))]
-    [Migration("20250426031946_InitSchema")]
-    partial class InitSchema
+    [Migration("20250426081459_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -103,7 +103,7 @@ namespace pos_library.Migrations
                         .HasColumnType("timestamp")
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
-                    b.Property<int>("product_key")
+                    b.Property<int>("product_id")
                         .HasColumnType("int");
 
                     b.Property<int>("quantity")
@@ -111,7 +111,7 @@ namespace pos_library.Migrations
 
                     b.HasKey("inventory_id");
 
-                    b.HasIndex("product_key");
+                    b.HasIndex("product_id");
 
                     b.ToTable("Inventory");
                 });
@@ -207,7 +207,7 @@ namespace pos_library.Migrations
                 {
                     b.HasOne("pos_library.models.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("product_key")
+                        .HasForeignKey("product_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

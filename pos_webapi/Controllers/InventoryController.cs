@@ -18,12 +18,18 @@ public class InventoryController : ControllerBase
     [HttpGet]
     public IEnumerable<Inventory> Get()
     {
-        return _dbCtx.Inventory;
+        return _dbCtx.Inventory.Include(i => i.Product).ToList();
     }
 
     [HttpPost]
     public ActionResult<Inventory> Post(Inventory inventory)
     {
+        var product = _dbCtx.Product.Find(inventory.product_id);
+        if (product == null)
+        {
+            return BadRequest("Product not found");
+        }
+        inventory.Product = product;
         _dbCtx.Inventory.Add(inventory);
         _dbCtx.SaveChanges();
         return CreatedAtAction(nameof(Get), new { id = inventory.inventory_id }, inventory);
