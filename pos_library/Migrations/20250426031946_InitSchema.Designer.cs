@@ -11,25 +11,25 @@ using pos_library;
 namespace pos_library.Migrations
 {
     [DbContext(typeof(DatabaseCtx))]
-    [Migration("20250411121112_UpdatedSaleTable")]
-    partial class UpdatedSaleTable
+    [Migration("20250426031946_InitSchema")]
+    partial class InitSchema
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.11")
+                .HasAnnotation("ProductVersion", "8.0.14")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("pos_library.models.Customers", b =>
+            modelBuilder.Entity("pos_library.models.Customer", b =>
                 {
                     b.Property<int>("customer_id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<DateTime>("created_at")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("timestamp");
 
                     b.Property<string>("email")
                         .IsRequired()
@@ -53,7 +53,10 @@ namespace pos_library.Migrations
 
                     b.HasKey("customer_id");
 
-                    b.ToTable("Customers");
+                    b.HasIndex("email")
+                        .IsUnique();
+
+                    b.ToTable("Customer");
                 });
 
             modelBuilder.Entity("pos_library.models.Employee", b =>
@@ -63,7 +66,9 @@ namespace pos_library.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("created_at")
-                        .HasColumnType("datetime(6)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<string>("first_name")
                         .IsRequired()
@@ -79,7 +84,6 @@ namespace pos_library.Migrations
                         .HasColumnType("varchar(20)");
 
                     b.Property<string>("position")
-                        .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("varchar(10)");
 
@@ -95,9 +99,11 @@ namespace pos_library.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("last_updated")
-                        .HasColumnType("datetime(6)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
-                    b.Property<int>("product_id")
+                    b.Property<int>("product_key")
                         .HasColumnType("int");
 
                     b.Property<int>("quantity")
@@ -105,7 +111,7 @@ namespace pos_library.Migrations
 
                     b.HasKey("inventory_id");
 
-                    b.HasIndex("product_id");
+                    b.HasIndex("product_key");
 
                     b.ToTable("Inventory");
                 });
@@ -119,6 +125,11 @@ namespace pos_library.Migrations
                     b.Property<string>("category")
                         .HasMaxLength(30)
                         .HasColumnType("varchar(30)");
+
+                    b.Property<DateTime>("created_at")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<decimal>("price")
                         .HasColumnType("decimal(6,2)");
@@ -149,7 +160,9 @@ namespace pos_library.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("sale_date")
-                        .HasColumnType("datetime(6)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<decimal>("total_amount")
                         .HasColumnType("decimal(6,2)");
@@ -165,11 +178,27 @@ namespace pos_library.Migrations
 
             modelBuilder.Entity("pos_library.models.SaleDetail", b =>
                 {
-                    b.Property<int>("sales_detail_id")
+                    b.Property<int>("sale_detail_id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.HasKey("sales_detail_id");
+                    b.Property<int>("product_id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("sale_id")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("unit_price")
+                        .HasColumnType("decimal(6,2)");
+
+                    b.HasKey("sale_detail_id");
+
+                    b.HasIndex("product_id");
+
+                    b.HasIndex("sale_id");
 
                     b.ToTable("SaleDetail");
                 });
@@ -178,7 +207,7 @@ namespace pos_library.Migrations
                 {
                     b.HasOne("pos_library.models.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("product_id")
+                        .HasForeignKey("product_key")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -187,7 +216,7 @@ namespace pos_library.Migrations
 
             modelBuilder.Entity("pos_library.models.Sale", b =>
                 {
-                    b.HasOne("pos_library.models.Customers", "Customer")
+                    b.HasOne("pos_library.models.Customer", "Customer")
                         .WithMany()
                         .HasForeignKey("customer_id")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -202,6 +231,25 @@ namespace pos_library.Migrations
                     b.Navigation("Customer");
 
                     b.Navigation("Employee");
+                });
+
+            modelBuilder.Entity("pos_library.models.SaleDetail", b =>
+                {
+                    b.HasOne("pos_library.models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("product_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("pos_library.models.Sale", "Sale")
+                        .WithMany()
+                        .HasForeignKey("sale_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Sale");
                 });
 #pragma warning restore 612, 618
         }

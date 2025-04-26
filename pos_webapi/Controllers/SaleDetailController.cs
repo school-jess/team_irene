@@ -26,14 +26,15 @@ public class SaleDetailController : ControllerBase
     {
         _dbCtx.SaleDetail.Add(saleDetail);
         _dbCtx.SaveChanges();
-        return CreatedAtAction(nameof(Get), new { id = saleDetail.sales_detail_id }, saleDetail);
+        return CreatedAtAction(nameof(Get), new { id = saleDetail.sale_detail_id }, saleDetail);
     }
 
     [HttpPut("{id}")]
     public IActionResult Put(int id, SaleDetail saleDetail)
     {
-        if (id != saleDetail.sales_detail_id)
+        if (id != saleDetail.sale_detail_id)
         {
+
             return BadRequest();
         }
         _dbCtx.Entry(saleDetail).State = EntityState.Modified;
@@ -43,7 +44,7 @@ public class SaleDetailController : ControllerBase
         }
         catch (DbUpdateException)
         {
-            if (!_dbCtx.SaleDetail.Any(sale => sale.sales_detail_id == id))
+            if (!_dbCtx.SaleDetail.Any(sale => sale.sale_detail_id == id))
             {
                 return NotFound();
             }

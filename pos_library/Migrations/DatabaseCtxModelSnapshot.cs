@@ -16,7 +16,7 @@ namespace pos_library.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.11")
+                .HasAnnotation("ProductVersion", "8.0.14")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("pos_library.models.Customer", b =>
@@ -81,7 +81,6 @@ namespace pos_library.Migrations
                         .HasColumnType("varchar(20)");
 
                     b.Property<string>("position")
-                        .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("varchar(10)");
 
@@ -101,7 +100,7 @@ namespace pos_library.Migrations
                         .HasColumnType("timestamp")
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
-                    b.Property<int>("product_id")
+                    b.Property<int>("product_key")
                         .HasColumnType("int");
 
                     b.Property<int>("quantity")
@@ -109,7 +108,7 @@ namespace pos_library.Migrations
 
                     b.HasKey("inventory_id");
 
-                    b.HasIndex("product_id");
+                    b.HasIndex("product_key");
 
                     b.ToTable("Inventory");
                 });
@@ -205,7 +204,7 @@ namespace pos_library.Migrations
                 {
                     b.HasOne("pos_library.models.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("product_id")
+                        .HasForeignKey("product_key")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
