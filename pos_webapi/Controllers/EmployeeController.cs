@@ -16,7 +16,7 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<EmployeeDTO> Get()
+    public IEnumerable<EmployeeDTO> GetAllEmployees()
     {
         return from employee in _dbCtx.Employee
                select new EmployeeDTO()
@@ -31,45 +31,36 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult<EmployeeDTO> Post(Employee employee)
+    public ActionResult<EmployeeDTO> Post(EmployeeDTO employeeDTO)
     {
+        var employee = new Employee()
+        {
+            employee_id = employeeDTO.EmployeeID,
+            first_name = employeeDTO.FirstName,
+            last_name = employeeDTO.LastName,
+            position = employeeDTO.Position,
+            hire_date = employeeDTO.HireDate,
+            created_at = employeeDTO.CreatedAt
+        };
         _dbCtx.Employee.Add(employee);
         _dbCtx.SaveChanges();
-        var employeeDTO = new EmployeeDTO()
-        {
-            EmployeeID = employee.employee_id,
-            FirstName = employee.first_name,
-            LastName = employee.last_name,
-            Position = employee.position,
-            HireDate = employee.hire_date,
-            CreatedAt = employee.created_at
-        };
-        return CreatedAtAction(nameof(Get), new { id = employee.employee_id }, employeeDTO);
+        return CreatedAtAction(nameof(Get), new { id = employeeDTO.EmployeeID }, employeeDTO);
     }
 
     [HttpPut("{id}")]
-    public IActionResult Put(int id, Employee employee)
+    public IActionResult Put(int id, EmployeeDTO employeeDTO)
     {
+        var employee = _dbCtx.Employee.Find(employeeDTO.EmployeeID);
+        if (employee == null)
+        {
+            return NotFound();
+        }
         if (id != employee.employee_id)
         {
             return BadRequest();
         }
         _dbCtx.Entry(employee).State = EntityState.Modified;
-        try
-        {
-            _dbCtx.SaveChanges();
-        }
-        catch (DbUpdateException)
-        {
-            if (!_dbCtx.Employee.Any(employee => employee.employee_id == id))
-            {
-                return NotFound();
-            }
-            else
-            {
-                throw;
-            }
-        }
+        _dbCtx.SaveChanges();
         return NoContent();
     }
 

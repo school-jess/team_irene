@@ -16,52 +16,71 @@ public class InventoryController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<Inventory> Get()
+    public IEnumerable<InventoryDTO> GetAllInventory()
     {
-        return _dbCtx.Inventory
-            .Include(i => i.Product)
-            .ToList();
+        return from inventory in _dbCtx.Inventory
+               select new InventoryDTO()
+               {
+                   InventoryID = inventory.inventory_id,
+                   LastUpdated = inventory.last_updated,
+                   ProductName = inventory.Product.product_name,
+                   Quantity = inventory.quantity
+               };
     }
 
     [HttpPost]
-    public ActionResult<Inventory> Post(Inventory inventory)
+    public ActionResult<InventoryDTO> Post(InventoryCreationDTO inventoryCreationDTO)
     {
-        var product = _dbCtx.Product.Find(inventory.product_id);
+        var product = _dbCtx.Product.Find(inventoryCreationDTO.ProductID);
         if (product == null)
         {
             return BadRequest("Product not found");
         }
-        inventory.Product = product;
+        var inventory = new Inventory()
+        {
+            inventory_id = inventoryCreationDTO.InventoryID,
+            last_updated = inventoryCreationDTO.LastUpdated,
+            Product = product,
+            product_id = product.product_id,
+            quantity = inventoryCreationDTO.Quantity
+        };
         _dbCtx.Inventory.Add(inventory);
         _dbCtx.SaveChanges();
-        return CreatedAtAction(nameof(Get), new { id = inventory.inventory_id }, inventory);
+        var inventoryDTO = new InventoryDTO()
+        {
+            InventoryID = inventoryCreationDTO.InventoryID,
+            LastUpdated = inventoryCreationDTO.LastUpdated,
+            ProductName = product.product_name,
+            Quantity = inventoryCreationDTO.Quantity
+        };
+        return CreatedAtAction(nameof(Get), new { id = inventory.inventory_id }, inventoryDTO);
     }
 
-    [HttpPut("{id}")]
-    public IActionResult Put(int id, Inventory inventory)
-    {
-        if (id != inventory.inventory_id)
-        {
-            return BadRequest();
-        }
-        _dbCtx.Entry(inventory).State = EntityState.Modified;
-        try
-        {
-            _dbCtx.SaveChanges();
-        }
-        catch (DbUpdateException)
-        {
-            if (!_dbCtx.Inventory.Any(inventory => inventory.inventory_id == id))
-            {
-                return NotFound();
-            }
-            else
-            {
-                throw;
-            }
-        }
-        return NoContent();
-    }
+    // [HttpPut("{id}")]
+    // public IActionResult Put(int id, InventoryDTO inventory)
+    // {
+    //     if (id != inventory.inventory_id)
+    //     {
+    //         return BadRequest();
+    //     }
+    //     _dbCtx.Entry(inventory).State = EntityState.Modified;
+    //     try
+    //     {
+    //         _dbCtx.SaveChanges();
+    //     }
+    //     catch (DbUpdateException)
+    //     {
+    //         if (!_dbCtx.Inventory.Any(inventory => inventory.inventory_id == id))
+    //         {
+    //             return NotFound();
+    //         }
+    //         else
+    //         {
+    //             throw;
+    //         }
+    //     }
+    //     return NoContent();
+    // }
 
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)

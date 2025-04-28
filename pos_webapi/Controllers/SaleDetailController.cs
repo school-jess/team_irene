@@ -16,19 +16,24 @@ public class SaleDetailController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<SaleDetail> Get()
+    public IEnumerable<SaleDetailDTO> GetAllSaleDetails()
     {
-        return _dbCtx.SaleDetail
-            .Include(s => s.Sale)
-            .Include(s => s.Product)
-            .ToList();
+        return from saleDetail in _dbCtx.SaleDetail
+               select new SaleDetailDTO()
+               {
+                   SaleDetailID = saleDetail.sale_detail_id,
+                   SaleID = saleDetail.sale_id,
+                   ProductName = saleDetail.Product.product_name,
+                   Quantity = saleDetail.quantity,
+                   UnitPrice = saleDetail.unit_price
+               };
     }
 
     [HttpPost]
-    public ActionResult<SaleDetail> Post(SaleDetail saleDetail)
+    public ActionResult<SaleDetailDTO> Post(SaleDetailCreationDTO saleDetailCreationDTO)
     {
-        var sale = _dbCtx.Sale.Find(saleDetail.sale_id);
-        var product = _dbCtx.Product.Find(saleDetail.product_id);
+        var sale = _dbCtx.Sale.Find(saleDetailCreationDTO.SaleID);
+        var product = _dbCtx.Product.Find(saleDetailCreationDTO.ProductID);
         if (sale == null)
         {
             return BadRequest("Sale doesn't exists");
@@ -37,39 +42,45 @@ public class SaleDetailController : ControllerBase
         {
             return BadRequest("Product doesn't exists");
         }
-        saleDetail.Sale = sale;
-        saleDetail.Product = product;
+        var saleDetail = new SaleDetail()
+        {
+            sale_id = saleDetailCreationDTO.SaleID,
+            Product = product,
+            Sale = sale,
+            product_id = product.product_id,
+            quantity = saleDetailCreationDTO.Quantity,
+            sale_detail_id = saleDetailCreationDTO.SaleDetailID,
+            unit_price = saleDetailCreationDTO.UnitPrice
+        };
         _dbCtx.SaleDetail.Add(saleDetail);
         _dbCtx.SaveChanges();
-        return CreatedAtAction(nameof(Get), new { id = saleDetail.sale_detail_id }, saleDetail);
+        var saleDetailDTO = new SaleDetailDTO()
+        {
+            SaleDetailID = saleDetailCreationDTO.SaleDetailID,
+            ProductName = product.product_name,
+            SaleID = sale.sale_id,
+            Quantity = saleDetailCreationDTO.Quantity,
+            UnitPrice = saleDetailCreationDTO.UnitPrice
+        };
+        return CreatedAtAction(nameof(Get), new { id = saleDetailDTO.SaleDetailID }, saleDetailDTO);
     }
 
-    [HttpPut("{id}")]
-    public IActionResult Put(int id, SaleDetail saleDetail)
-    {
-        if (id != saleDetail.sale_detail_id)
-        {
-
-            return BadRequest();
-        }
-        _dbCtx.Entry(saleDetail).State = EntityState.Modified;
-        try
-        {
-            _dbCtx.SaveChanges();
-        }
-        catch (DbUpdateException)
-        {
-            if (!_dbCtx.SaleDetail.Any(sale => sale.sale_detail_id == id))
-            {
-                return NotFound();
-            }
-            else
-            {
-                throw;
-            }
-        }
-        return NoContent();
-    }
+    // [HttpPut("{id}")]
+    // public IActionResult Put(int id, SaleDetailDTO saleDetailDTO)
+    // {
+    //     var saleDetail = _dbCtx.Sale.Find(saleDetailDTO.SaleID);
+    //     if (saleDetail == null)
+    //     {
+    //         return NotFound();
+    //     }
+    //     if (id != saleDetail.sale_id)
+    //     {
+    //         return BadRequest();
+    //     }
+    //     _dbCtx.Entry(saleDetail).State = EntityState.Modified;
+    //     _dbCtx.SaveChanges();
+    //     return NoContent();
+    // }
 
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)

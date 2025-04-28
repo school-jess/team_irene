@@ -16,7 +16,7 @@ public class SaleController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<SaleDTO> Get()
+    public IEnumerable<SaleDTO> GetAllSales()
     {
         return from sale in _dbCtx.Sale
                select new SaleDTO()
@@ -30,10 +30,10 @@ public class SaleController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult<SaleDTO> Post(Sale sale)
+    public ActionResult<SaleDTO> Post(SaleCreationDTO saleCreationDTO)
     {
-        var customer = _dbCtx.Customer.Find(sale.customer_id);
-        var employee = _dbCtx.Employee.Find(sale.employee_id);
+        var customer = _dbCtx.Customer.Find(saleCreationDTO.CustomerID);
+        var employee = _dbCtx.Employee.Find(saleCreationDTO.EmployeeID);
         if (customer == null)
         {
             return BadRequest("Customer not found");
@@ -42,46 +42,45 @@ public class SaleController : ControllerBase
         {
             return BadRequest("Employee not found");
         }
-        sale.Customer = customer;
-        sale.Employee = employee;
+        var sale = new Sale()
+        {
+            sale_id = saleCreationDTO.SaleID,
+            customer_id = saleCreationDTO.SaleID,
+            total_amount = saleCreationDTO.TotalAmount,
+            sale_date = saleCreationDTO.SaleDate,
+            employee_id = employee.employee_id,
+            Customer = customer,
+            Employee = employee
+        };
         _dbCtx.Sale.Add(sale);
         _dbCtx.SaveChanges();
         var saleDTO = new SaleDTO()
         {
-            SaleID = sale.sale_id,
+            SaleID = saleCreationDTO.SaleID,
             CustomerName = $"{customer.first_name} {customer.last_name}",
             EmployeeName = $"{employee.first_name} {employee.last_name}",
-            SaleDate = sale.sale_date,
-            TotalAmount = sale.total_amount
+            SaleDate = saleCreationDTO.SaleDate,
+            TotalAmount = saleCreationDTO.TotalAmount
         };
-        return CreatedAtAction(nameof(Get), new { id = sale.sale_id }, sale);
+        return CreatedAtAction(nameof(Get), new { id = saleDTO.SaleID }, saleDTO);
     }
 
-    [HttpPut("{id}")]
-    public IActionResult Put(int id, Sale sale)
-    {
-        if (id != sale.sale_id)
-        {
-            return BadRequest();
-        }
-        _dbCtx.Entry(sale).State = EntityState.Modified;
-        try
-        {
-            _dbCtx.SaveChanges();
-        }
-        catch (DbUpdateException)
-        {
-            if (!_dbCtx.Sale.Any(sale => sale.sale_id == id))
-            {
-                return NotFound();
-            }
-            else
-            {
-                throw;
-            }
-        }
-        return NoContent();
-    }
+    // [HttpPut("{id}")]
+    // public IActionResult Put(int id, SaleDTO saleDTO)
+    // {
+    //     var sale = _dbCtx.Sale.Find(saleDTO.SaleID);
+    //     if (sale == null)
+    //     {
+    //         return NotFound();
+    //     }
+    //     if (id != sale.sale_id)
+    //     {
+    //         return BadRequest();
+    //     }
+    //     _dbCtx.Entry(sale).State = EntityState.Modified;
+    //     _dbCtx.SaveChanges();
+    //     return NoContent();
+    // }
 
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)

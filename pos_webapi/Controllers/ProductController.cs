@@ -16,42 +16,51 @@ public class ProductController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<Product> Get()
+    public IEnumerable<ProductDTO> Get()
     {
-        return _dbCtx.Product;
+        return from product in _dbCtx.Product
+               select new ProductDTO()
+               {
+                   ProductID = product.product_id,
+                   Category = product.category,
+                   CreatedAt = product.created_at,
+                   Price = product.price,
+                   ProductName = product.product_name,
+                   StockQuality = product.stock_quality
+               };
     }
 
     [HttpPost]
-    public ActionResult<Product> Post(Product product)
+    public ActionResult<ProductDTO> Post(ProductDTO productDTO)
     {
+        var product = new Product()
+        {
+            category = productDTO.Category,
+            created_at = productDTO.CreatedAt,
+            price = productDTO.Price,
+            product_id = productDTO.ProductID,
+            product_name = productDTO.ProductName,
+            stock_quality = productDTO.StockQuality
+        };
         _dbCtx.Product.Add(product);
         _dbCtx.SaveChanges();
-        return CreatedAtAction(nameof(Get), new { id = product.product_id }, product);
+        return CreatedAtAction(nameof(Get), new { id = product.product_id }, productDTO);
     }
 
     [HttpPut("{id}")]
-    public IActionResult Put(int id, Product product)
+    public IActionResult Put(int id, ProductDTO productDTO)
     {
+        var product = _dbCtx.Product.Find(productDTO.ProductID);
+        if (product == null)
+        {
+            return NotFound();
+        }
         if (id != product.product_id)
         {
             return BadRequest();
         }
         _dbCtx.Entry(product).State = EntityState.Modified;
-        try
-        {
-            _dbCtx.SaveChanges();
-        }
-        catch (DbUpdateException)
-        {
-            if (!_dbCtx.Product.Any(product => product.product_id == id))
-            {
-                return NotFound();
-            }
-            else
-            {
-                throw;
-            }
-        }
+        _dbCtx.SaveChanges();
         return NoContent();
     }
 

@@ -16,7 +16,7 @@ public class CustomerController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<CustomerDTO> Get()
+    public IEnumerable<CustomerDTO> GetAllCustomers()
     {
         return from customer in _dbCtx.Customer
                select new CustomerDTO()
@@ -30,46 +30,57 @@ public class CustomerController : ControllerBase
                };
     }
 
-    [HttpPost]
-    public ActionResult<CustomerDTO> Post(Customer customer)
+    [HttpGet("{id}")]
+    public CustomerDTO GetSpecificCustomer(int id)
     {
-        _dbCtx.Customer.Add(customer);
-        _dbCtx.SaveChanges();
+        var customer = _dbCtx.Customer.Find(id);
+        if (customer == null)
+        {
+            return BadRequest("Customer not found");
+        }
         var customerDTO = new CustomerDTO()
         {
             CustomerID = customer.customer_id,
+            CreatedAt = customer.created_at,
+            Email = customer.email,
             FirstName = customer.first_name,
             LastName = customer.last_name,
-            Email = customer.email,
-            PhoneNumber = customer.phone_number,
-            CreatedAt = customer.created_at
+            PhoneNumber = customer.phone_number
         };
-        return CreatedAtAction(nameof(Get), new { id = customer.customer_id }, customerDTO);
+        return customerDTO;
+    }
+
+    [HttpPost]
+    public ActionResult<CustomerDTO> Post(CustomerDTO customerDTO)
+    {
+        var customer = new Customer()
+        {
+            customer_id = customerDTO.CustomerID,
+            created_at = customerDTO.CreatedAt,
+            email = customerDTO.Email,
+            first_name = customerDTO.FirstName,
+            last_name = customerDTO.LastName,
+            phone_number = customerDTO.PhoneNumber
+        };
+        _dbCtx.Customer.Add(customer);
+        _dbCtx.SaveChanges();
+        return CreatedAtAction(nameof(Get), new { id = customerDTO.CustomerID }, customerDTO);
     }
 
     [HttpPut("{id}")]
-    public IActionResult Put(int id, Customer customer)
+    public IActionResult Put(int id, CustomerDTO customerDTO)
     {
+        var customer = _dbCtx.Customer.Find(customerDTO.CustomerID);
+        if (customer == null)
+        {
+            return NotFound();
+        }
         if (id != customer.customer_id)
         {
             return BadRequest();
         }
         _dbCtx.Entry(customer).State = EntityState.Modified;
-        try
-        {
-            _dbCtx.SaveChanges();
-        }
-        catch (DbUpdateException)
-        {
-            if (!_dbCtx.Customer.Any(customer => customer.customer_id == id))
-            {
-                return NotFound();
-            }
-            else
-            {
-                throw;
-            }
-        }
+        _dbCtx.SaveChanges();
         return NoContent();
     }
 

@@ -81,7 +81,7 @@ public class Employee
     [Column(TypeName = "timestamp")]
     public DateTime created_at { get; set; }
 
-    public List<Sale>? Sales { get; set; }
+    public List<Sale>? Sales { get; set; } = new List<Sale>();
 }
 
 public class SaleDetail
@@ -131,7 +131,7 @@ public class Product
     [Column(TypeName = "timestamp")]
     public DateTime created_at { get; set; }
 
-    public List<SaleDetail>? SaleDetails { get; set; }
+    public List<SaleDetail>? SaleDetails { get; set; } = new List<SaleDetail>();
 }
 
 public class Inventory
