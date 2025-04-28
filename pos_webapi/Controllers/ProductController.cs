@@ -16,7 +16,7 @@ public class ProductController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<ProductDTO> Get()
+    public IEnumerable<ProductDTO> GetAllProducts()
     {
         return from product in _dbCtx.Product
                select new ProductDTO()
@@ -44,7 +44,7 @@ public class ProductController : ControllerBase
         };
         _dbCtx.Product.Add(product);
         _dbCtx.SaveChanges();
-        return CreatedAtAction(nameof(Get), new { id = product.product_id }, productDTO);
+        return CreatedAtAction(nameof(GetAllProducts), new { id = product.product_id }, productDTO);
     }
 
     [HttpPut("{id}")]

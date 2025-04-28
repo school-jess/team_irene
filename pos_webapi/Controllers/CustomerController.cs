@@ -31,23 +31,15 @@ public class CustomerController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public CustomerDTO GetSpecificCustomer(int id)
+    public ActionResult<CustomerDetailsDTO> GetSpecificCustomer(int id)
     {
-        var customer = _dbCtx.Customer.Find(id);
+        var customer = _dbCtx.Customer.Include(c => ).Find(id);
         if (customer == null)
         {
             return BadRequest("Customer not found");
         }
-        var customerDTO = new CustomerDTO()
-        {
-            CustomerID = customer.customer_id,
-            CreatedAt = customer.created_at,
-            Email = customer.email,
-            FirstName = customer.first_name,
-            LastName = customer.last_name,
-            PhoneNumber = customer.phone_number
-        };
-        return customerDTO;
+
+        return Ok();
     }
 
     [HttpPost]
@@ -64,7 +56,7 @@ public class CustomerController : ControllerBase
         };
         _dbCtx.Customer.Add(customer);
         _dbCtx.SaveChanges();
-        return CreatedAtAction(nameof(Get), new { id = customerDTO.CustomerID }, customerDTO);
+        return CreatedAtAction(nameof(GetAllCustomers), new { id = customerDTO.CustomerID }, customerDTO);
     }
 
     [HttpPut("{id}")]

@@ -62,7 +62,7 @@ public class SaleController : ControllerBase
             SaleDate = saleCreationDTO.SaleDate,
             TotalAmount = saleCreationDTO.TotalAmount
         };
-        return CreatedAtAction(nameof(Get), new { id = saleDTO.SaleID }, saleDTO);
+        return CreatedAtAction(nameof(GetAllSales), new { id = saleDTO.SaleID }, saleDTO);
     }
 
     // [HttpPut("{id}")]

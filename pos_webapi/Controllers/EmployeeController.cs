@@ -44,7 +44,7 @@ public class EmployeeController : ControllerBase
         };
         _dbCtx.Employee.Add(employee);
         _dbCtx.SaveChanges();
-        return CreatedAtAction(nameof(Get), new { id = employeeDTO.EmployeeID }, employeeDTO);
+        return CreatedAtAction(nameof(GetAllEmployees), new { id = employeeDTO.EmployeeID }, employeeDTO);
     }
 
     [HttpPut("{id}")]

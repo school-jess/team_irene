@@ -62,7 +62,7 @@ public class SaleDetailController : ControllerBase
             Quantity = saleDetailCreationDTO.Quantity,
             UnitPrice = saleDetailCreationDTO.UnitPrice
         };
-        return CreatedAtAction(nameof(Get), new { id = saleDetailDTO.SaleDetailID }, saleDetailDTO);
+        return CreatedAtAction(nameof(GetAllSaleDetails), new { id = saleDetailDTO.SaleDetailID }, saleDetailDTO);
     }
 
     // [HttpPut("{id}")]

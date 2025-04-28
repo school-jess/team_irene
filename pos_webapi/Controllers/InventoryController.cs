@@ -16,7 +16,7 @@ public class InventoryController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<InventoryDTO> GetAllInventory()
+    public IEnumerable<InventoryDTO> GetAllInventories()
     {
         return from inventory in _dbCtx.Inventory
                select new InventoryDTO()
@@ -53,7 +53,7 @@ public class InventoryController : ControllerBase
             ProductName = product.product_name,
             Quantity = inventoryCreationDTO.Quantity
         };
-        return CreatedAtAction(nameof(Get), new { id = inventory.inventory_id }, inventoryDTO);
+        return CreatedAtAction(nameof(GetAllInventories), new { id = inventory.inventory_id }, inventoryDTO);
     }
 
     // [HttpPut("{id}")]
