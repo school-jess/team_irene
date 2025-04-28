@@ -16,14 +16,29 @@ public class SaleDetailController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<Sale> Get()
+    public IEnumerable<SaleDetail> Get()
     {
-        return _dbCtx.Sale;
+        return _dbCtx.SaleDetail
+            .Include(s => s.Sale)
+            .Include(s => s.Product)
+            .ToList();
     }
 
     [HttpPost]
     public ActionResult<SaleDetail> Post(SaleDetail saleDetail)
     {
+        var sale = _dbCtx.Sale.Find(saleDetail.sale_id);
+        var product = _dbCtx.Product.Find(saleDetail.product_id);
+        if (sale == null)
+        {
+            return BadRequest("Sale doesn't exists");
+        }
+        if (product == null)
+        {
+            return BadRequest("Product doesn't exists");
+        }
+        saleDetail.Sale = sale;
+        saleDetail.Product = product;
         _dbCtx.SaleDetail.Add(saleDetail);
         _dbCtx.SaveChanges();
         return CreatedAtAction(nameof(Get), new { id = saleDetail.sale_detail_id }, saleDetail);

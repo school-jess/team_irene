@@ -16,16 +16,44 @@ public class SaleController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<Sale> Get()
+    public IEnumerable<SaleDTO> Get()
     {
-        return _dbCtx.Sale;
+        return from sale in _dbCtx.Sale
+               select new SaleDTO()
+               {
+                   SaleID = sale.sale_id,
+                   CustomerName = $"{sale.Customer.first_name} {sale.Customer.last_name}",
+                   EmployeeName = $"{sale.Employee.first_name} {sale.Employee.last_name}",
+                   SaleDate = sale.sale_date,
+                   TotalAmount = sale.total_amount
+               };
     }
 
     [HttpPost]
-    public ActionResult<Sale> Post(Sale sale)
+    public ActionResult<SaleDTO> Post(Sale sale)
     {
+        var customer = _dbCtx.Customer.Find(sale.customer_id);
+        var employee = _dbCtx.Employee.Find(sale.employee_id);
+        if (customer == null)
+        {
+            return BadRequest("Customer not found");
+        }
+        if (employee == null)
+        {
+            return BadRequest("Employee not found");
+        }
+        sale.Customer = customer;
+        sale.Employee = employee;
         _dbCtx.Sale.Add(sale);
         _dbCtx.SaveChanges();
+        var saleDTO = new SaleDTO()
+        {
+            SaleID = sale.sale_id,
+            CustomerName = $"{customer.first_name} {customer.last_name}",
+            EmployeeName = $"{employee.first_name} {employee.last_name}",
+            SaleDate = sale.sale_date,
+            TotalAmount = sale.total_amount
+        };
         return CreatedAtAction(nameof(Get), new { id = sale.sale_id }, sale);
     }
 

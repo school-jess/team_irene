@@ -16,17 +16,35 @@ public class CustomerController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<Customer> Get()
+    public IEnumerable<CustomerDTO> Get()
     {
-        return _dbCtx.Customer;
+        return from customer in _dbCtx.Customer
+               select new CustomerDTO()
+               {
+                   CustomerID = customer.customer_id,
+                   FirstName = customer.first_name,
+                   LastName = customer.last_name,
+                   Email = customer.email,
+                   PhoneNumber = customer.phone_number,
+                   CreatedAt = customer.created_at
+               };
     }
 
     [HttpPost]
-    public ActionResult<Customer> Post(Customer customer)
+    public ActionResult<CustomerDTO> Post(Customer customer)
     {
         _dbCtx.Customer.Add(customer);
         _dbCtx.SaveChanges();
-        return CreatedAtAction(nameof(Get), new { id = customer.customer_id }, customer);
+        var customerDTO = new CustomerDTO()
+        {
+            CustomerID = customer.customer_id,
+            FirstName = customer.first_name,
+            LastName = customer.last_name,
+            Email = customer.email,
+            PhoneNumber = customer.phone_number,
+            CreatedAt = customer.created_at
+        };
+        return CreatedAtAction(nameof(Get), new { id = customer.customer_id }, customerDTO);
     }
 
     [HttpPut("{id}")]

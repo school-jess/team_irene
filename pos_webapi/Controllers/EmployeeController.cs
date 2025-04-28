@@ -16,17 +16,35 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<Employee> Get()
+    public IEnumerable<EmployeeDTO> Get()
     {
-        return _dbCtx.Employee;
+        return from employee in _dbCtx.Employee
+               select new EmployeeDTO()
+               {
+                   EmployeeID = employee.employee_id,
+                   FirstName = employee.first_name,
+                   LastName = employee.last_name,
+                   Position = employee.position,
+                   HireDate = employee.hire_date,
+                   CreatedAt = employee.created_at
+               };
     }
 
     [HttpPost]
-    public ActionResult<Employee> Post(Employee employee)
+    public ActionResult<EmployeeDTO> Post(Employee employee)
     {
         _dbCtx.Employee.Add(employee);
         _dbCtx.SaveChanges();
-        return CreatedAtAction(nameof(Get), new { id = employee.employee_id }, employee);
+        var employeeDTO = new EmployeeDTO()
+        {
+            EmployeeID = employee.employee_id,
+            FirstName = employee.first_name,
+            LastName = employee.last_name,
+            Position = employee.position,
+            HireDate = employee.hire_date,
+            CreatedAt = employee.created_at
+        };
+        return CreatedAtAction(nameof(Get), new { id = employee.employee_id }, employeeDTO);
     }
 
     [HttpPut("{id}")]

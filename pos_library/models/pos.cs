@@ -1,24 +1,26 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace pos_library.models;
 
+[Index(nameof(email), IsUnique = true)]
 public class Customer
 {
     [Key]
     [Required]
     public int customer_id { get; set; }
 
-    [MaxLength(20)]
     [Required]
+    [MaxLength(20)]
     public required string first_name { get; set; }
 
-    [MaxLength(20)]
     [Required]
+    [MaxLength(20)]
     public required string last_name { get; set; }
 
-    [MaxLength(255)]
     [Required]
+    [MaxLength(255)]
     public required string email { get; set; }
 
     [MaxLength(13)]
@@ -27,10 +29,7 @@ public class Customer
     [Column(TypeName = "timestamp")]
     public DateTime created_at { get; set; }
 
-    public override string ToString()
-    {
-        return $"sale_id: {customer_id}, customer_id: {first_name}, employee_id: {last_name}, sale_date: {email}, total_amount: {phone_number}, created_at: {created_at}";
-    }
+    public List<Sale>? Sales { get; set; } = new List<Sale>();
 }
 
 public class Sale
@@ -42,12 +41,12 @@ public class Sale
     [Required]
     [ForeignKey("Customer")]
     public int customer_id { get; set; }
-    public virtual Customer Customer { get; set; }
+    public virtual Customer? Customer { get; set; }
 
     [Required]
     [ForeignKey("Employee")]
     public int employee_id { get; set; }
-    public virtual Employee Employee { get; set; }
+    public virtual Employee? Employee { get; set; }
 
     [Column(TypeName = "timestamp")]
     public DateTime sale_date { get; set; }
@@ -56,10 +55,7 @@ public class Sale
     [Column(TypeName = "decimal(6,2)")]
     public decimal total_amount { get; set; }
 
-    public override string ToString()
-    {
-        return $"sale_id: {sale_id}, customer_id: {customer_id}, employee_id: {employee_id}, sale_date: {sale_date}, total_amount: {total_amount}";
-    }
+    public List<SaleDetail>? SaleDetails { get; set; } = new List<SaleDetail>();
 }
 
 public class Employee
@@ -85,11 +81,7 @@ public class Employee
     [Column(TypeName = "timestamp")]
     public DateTime created_at { get; set; }
 
-    public override string ToString()
-    {
-
-        return $"sale_detail_id: {employee_id}, sale_id: {first_name}, product_id: {last_name}, quantity: {position}, unit_price: {hire_date}, created_at:{created_at}";
-    }
+    public List<Sale>? Sales { get; set; }
 }
 
 public class SaleDetail
@@ -101,24 +93,19 @@ public class SaleDetail
     [Required]
     [ForeignKey("Sale")]
     public int sale_id { get; set; }
-    public virtual Sale Sale { get; set; }
+    public virtual Sale? Sale { get; set; }
 
     [Required]
     [ForeignKey("Product")]
     public int product_id { get; set; }
-    public virtual Product Product { get; set; }
+    public virtual Product? Product { get; set; }
 
     [Required]
     public required int quantity { get; set; }
 
-    [Column(TypeName = "decimal(6,2)")]
     [Required]
+    [Column(TypeName = "decimal(6,2)")]
     public required decimal unit_price { get; set; }
-
-    public override string ToString()
-    {
-        return $"sale_detail_id: {sale_detail_id}, sale_id: {sale_id}, product_id: {product_id}, quantity: {quantity}, unit_price: {unit_price}";
-    }
 }
 
 public class Product
@@ -134,8 +121,8 @@ public class Product
     [MaxLength(30)]
     public string? category { get; set; }
 
-    [Column(TypeName = "decimal(6,2)")]
     [Required]
+    [Column(TypeName = "decimal(6,2)")]
     public required decimal price { get; set; }
 
     [Required]
@@ -144,10 +131,7 @@ public class Product
     [Column(TypeName = "timestamp")]
     public DateTime created_at { get; set; }
 
-    public override string ToString()
-    {
-        return $"product_id: {product_id}, product_name: {product_name}, category: {category}, stock_quality: {stock_quality}, created_at: {created_at}";
-    }
+    public List<SaleDetail>? SaleDetails { get; set; }
 }
 
 public class Inventory
@@ -159,7 +143,6 @@ public class Inventory
     [Required]
     [ForeignKey("Product")]
     public int product_id { get; set; }
-
     public virtual Product? Product { get; set; }
 
     [Required]
@@ -167,9 +150,4 @@ public class Inventory
 
     [Column(TypeName = "timestamp")]
     public DateTime last_updated { get; set; }
-
-    public override string ToString()
-    {
-        return $"inventory_id: {inventory_id}, product_id: {product_id}, quantity: {quantity}, last_updated: {last_updated}";
-    }
 }

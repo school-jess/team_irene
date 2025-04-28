@@ -20,7 +20,7 @@ public class DatabaseCtx : DbContext
     {
         modelBuilder.Entity<Customer>()
             .HasIndex(p => p.email)
-            .IsUnique();
+            .IsUnique(true);
         modelBuilder.Entity<Sale>()
             .Property(e => e.sale_date)
             .HasDefaultValueSql("CURRENT_TIMESTAMP");

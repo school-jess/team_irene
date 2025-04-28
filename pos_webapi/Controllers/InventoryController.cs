@@ -18,7 +18,9 @@ public class InventoryController : ControllerBase
     [HttpGet]
     public IEnumerable<Inventory> Get()
     {
-        return _dbCtx.Inventory.Include(i => i.Product).ToList();
+        return _dbCtx.Inventory
+            .Include(i => i.Product)
+            .ToList();
     }
 
     [HttpPost]
