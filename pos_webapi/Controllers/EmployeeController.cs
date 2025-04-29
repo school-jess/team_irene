@@ -85,6 +85,12 @@ public class EmployeeController : ControllerBase
             return BadRequest();
         }
         _dbCtx.Entry(employee).State = EntityState.Modified;
+        employee.employee_id = employeeDTO.EmployeeID;
+        employee.first_name = employeeDTO.FirstName;
+        employee.last_name = employeeDTO.LastName;
+        employee.position = employeeDTO.Position;
+        employee.hire_date = employeeDTO.HireDate;
+        employee.created_at = employeeDTO.CreatedAt;
         _dbCtx.SaveChanges();
         return NoContent();
     }

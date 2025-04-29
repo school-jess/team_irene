@@ -87,6 +87,12 @@ public class CustomerController : ControllerBase
             return BadRequest();
         }
         _dbCtx.Entry(customer).State = EntityState.Modified;
+        customer.customer_id = customerDTO.CustomerID;
+        customer.created_at = customerDTO.CreatedAt;
+        customer.email = customerDTO.Email;
+        customer.first_name = customerDTO.FirstName;
+        customer.last_name = customerDTO.LastName;
+        customer.phone_number = customerDTO.PhoneNumber;
         _dbCtx.SaveChanges();
         return NoContent();
     }

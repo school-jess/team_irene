@@ -60,6 +60,12 @@ public class ProductController : ControllerBase
             return BadRequest();
         }
         _dbCtx.Entry(product).State = EntityState.Modified;
+        product.category = productDTO.Category;
+        product.created_at = productDTO.CreatedAt;
+        product.price = productDTO.Price;
+        product.product_id = productDTO.ProductID;
+        product.product_name = productDTO.ProductName;
+        product.stock_quality = productDTO.StockQuality;
         _dbCtx.SaveChanges();
         return NoContent();
     }

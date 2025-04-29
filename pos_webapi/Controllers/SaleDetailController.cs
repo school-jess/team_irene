@@ -68,7 +68,7 @@ public class SaleDetailController : ControllerBase
     [HttpPut("{id}")]
     public IActionResult Put(int id, SaleDetailCreationDTO saleDetailCreationDTO)
     {
-        var saleDetail = _dbCtx.Sale.Find(saleDetailCreationDTO.SaleID);
+        var saleDetail = _dbCtx.SaleDetail.Find(saleDetailCreationDTO.SaleID);
         if (saleDetail == null)
         {
             return NotFound();
@@ -77,7 +77,16 @@ public class SaleDetailController : ControllerBase
         {
             return BadRequest();
         }
+        var sale = _dbCtx.Sale.Find(saleDetailCreationDTO.SaleID);
+        var product = _dbCtx.Product.Find(saleDetailCreationDTO.ProductID);
         _dbCtx.Entry(saleDetail).State = EntityState.Modified;
+        saleDetail.sale_detail_id = saleDetailCreationDTO.SaleDetailID;
+        saleDetail.product_id = saleDetailCreationDTO.ProductID;
+        saleDetail.Product = product;
+        saleDetail.sale_id = saleDetailCreationDTO.SaleID;
+        saleDetail.Sale = sale;
+        saleDetail.quantity = saleDetailCreationDTO.Quantity;
+        saleDetail.unit_price = saleDetailCreationDTO.UnitPrice;
         _dbCtx.SaveChanges();
         return NoContent();
     }

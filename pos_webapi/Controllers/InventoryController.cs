@@ -68,7 +68,13 @@ public class InventoryController : ControllerBase
         {
             return BadRequest();
         }
+        var product = _dbCtx.Product.Find(inventoryCreationDTO.ProductID);
         _dbCtx.Entry(inventory).State = EntityState.Modified;
+        inventory.inventory_id = inventoryCreationDTO.InventoryID;
+        inventory.product_id = inventoryCreationDTO.ProductID;
+        inventory.Product = product;
+        inventory.last_updated = inventoryCreationDTO.LastUpdated;
+        inventory.quantity = inventoryCreationDTO.Quantity;
         _dbCtx.SaveChanges();
         return NoContent();
     }

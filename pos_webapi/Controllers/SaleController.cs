@@ -77,7 +77,16 @@ public class SaleController : ControllerBase
         {
             return BadRequest();
         }
+        var customer = _dbCtx.Customer.Find(saleCreationDTO.CustomerID);
+        var employee = _dbCtx.Employee.Find(saleCreationDTO.EmployeeID);
         _dbCtx.Entry(sale).State = EntityState.Modified;
+        sale.sale_id = saleCreationDTO.SaleID;
+        sale.customer_id = saleCreationDTO.CustomerID;
+        sale.Customer = customer;
+        sale.employee_id = saleCreationDTO.EmployeeID;
+        sale.Employee = employee;
+        sale.sale_date = saleCreationDTO.SaleDate;
+        sale.total_amount = saleCreationDTO.TotalAmount;
         _dbCtx.SaveChanges();
         return NoContent();
     }
