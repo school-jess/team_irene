@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using pos_library;
 
@@ -10,9 +11,11 @@ using pos_library;
 namespace pos_library.Migrations
 {
     [DbContext(typeof(DatabaseCtx))]
-    partial class DatabaseCtxModelSnapshot : ModelSnapshot
+    [Migration("20250429021730_UpdatedCreatedAtToBeNull")]
+    partial class UpdatedCreatedAtToBeNull
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,9 +29,7 @@ namespace pos_library.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("created_at")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+                        .HasColumnType("timestamp");
 
                     b.Property<string>("email")
                         .IsRequired()
@@ -63,7 +64,7 @@ namespace pos_library.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("created_at")
+                    b.Property<DateTime>("created_at")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp")
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
@@ -73,7 +74,7 @@ namespace pos_library.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("varchar(20)");
 
-                    b.Property<DateTime?>("hire_date")
+                    b.Property<DateTime>("hire_date")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("last_name")
@@ -96,7 +97,7 @@ namespace pos_library.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("last_updated")
+                    b.Property<DateTime>("last_updated")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp")
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");

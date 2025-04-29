@@ -30,6 +30,31 @@ public class EmployeeController : ControllerBase
                };
     }
 
+    [HttpGet("{id}")]
+    public ActionResult<EmployeeDetailsDTO> GetSpecificeEmployee(int id)
+    {
+        var employee = _dbCtx.Employee.Find(id);
+        if (employee == null)
+        {
+            return BadRequest("Customer not found");
+        }
+        var employeeDetailsDTO = new EmployeeDetailsDTO()
+        {
+            EmployeeID = employee.employee_id,
+            FullName = $"{employee.first_name} {employee.last_name}",
+        };
+        foreach (var sale in employee.Sales)
+        {
+            employeeDetailsDTO.Purchased.Add(new PurchasedDTO()
+            {
+                SaleID = sale.sale_id,
+                SaleDate = sale.sale_date,
+                TotalAmount = sale.total_amount
+            });
+        }
+        return Ok(employeeDetailsDTO);
+    }
+
     [HttpPost]
     public ActionResult<EmployeeDTO> Post(EmployeeDTO employeeDTO)
     {

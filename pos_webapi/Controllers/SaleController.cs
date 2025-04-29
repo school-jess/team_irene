@@ -65,22 +65,22 @@ public class SaleController : ControllerBase
         return CreatedAtAction(nameof(GetAllSales), new { id = saleDTO.SaleID }, saleDTO);
     }
 
-    // [HttpPut("{id}")]
-    // public IActionResult Put(int id, SaleDTO saleDTO)
-    // {
-    //     var sale = _dbCtx.Sale.Find(saleDTO.SaleID);
-    //     if (sale == null)
-    //     {
-    //         return NotFound();
-    //     }
-    //     if (id != sale.sale_id)
-    //     {
-    //         return BadRequest();
-    //     }
-    //     _dbCtx.Entry(sale).State = EntityState.Modified;
-    //     _dbCtx.SaveChanges();
-    //     return NoContent();
-    // }
+    [HttpPut("{id}")]
+    public IActionResult Put(int id, SaleCreationDTO saleCreationDTO)
+    {
+        var sale = _dbCtx.Sale.Find(saleCreationDTO.SaleID);
+        if (sale == null)
+        {
+            return NotFound();
+        }
+        if (id != sale.sale_id)
+        {
+            return BadRequest();
+        }
+        _dbCtx.Entry(sale).State = EntityState.Modified;
+        _dbCtx.SaveChanges();
+        return NoContent();
+    }
 
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)

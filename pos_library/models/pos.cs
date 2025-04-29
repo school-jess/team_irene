@@ -8,102 +8,65 @@ namespace pos_library.models;
 public class Customer
 {
     [Key]
-    [Required]
-    public int customer_id { get; set; }
-
-    [Required]
+    public required int customer_id { get; set; }
     [MaxLength(20)]
     public required string first_name { get; set; }
-
-    [Required]
     [MaxLength(20)]
     public required string last_name { get; set; }
-
-    [Required]
     [MaxLength(255)]
     public required string email { get; set; }
-
     [MaxLength(13)]
-    public required string phone_number { get; set; }
-
+    public string? phone_number { get; set; }
     [Column(TypeName = "timestamp")]
-    public DateTime created_at { get; set; }
-
-    public List<Sale>? Sales { get; set; } = new List<Sale>();
+    public DateTime? created_at { get; set; }
+    public List<Sale> Sales { get; set; } = new List<Sale>();
 }
 
 public class Sale
 {
     [Key]
-    [Required]
-    public int sale_id { get; set; }
-
-    [Required]
+    public required int sale_id { get; set; }
     [ForeignKey("Customer")]
     public int customer_id { get; set; }
-    public virtual Customer? Customer { get; set; }
-
-    [Required]
+    public virtual Customer Customer { get; set; }
     [ForeignKey("Employee")]
-    public int employee_id { get; set; }
-    public virtual Employee? Employee { get; set; }
-
+    public required int employee_id { get; set; }
+    public virtual Employee Employee { get; set; }
     [Column(TypeName = "timestamp")]
-    public DateTime sale_date { get; set; }
-
-    [Required]
+    public DateTime? sale_date { get; set; }
     [Column(TypeName = "decimal(6,2)")]
-    public decimal total_amount { get; set; }
-
-    public List<SaleDetail>? SaleDetails { get; set; } = new List<SaleDetail>();
+    public required decimal total_amount { get; set; }
+    public List<SaleDetail> SaleDetails { get; set; } = new List<SaleDetail>();
 }
 
 public class Employee
 {
     [Key]
-    [Required]
-    public int employee_id { get; set; }
-
+    public required int employee_id { get; set; }
     [MaxLength(20)]
-    [Required]
     public required string first_name { get; set; }
-
     [MaxLength(20)]
-    [Required]
     public required string last_name { get; set; }
-
     [MaxLength(10)]
     public string? position { get; set; }
-
     [DataType(DataType.Date)]
-    public DateTime hire_date { get; set; }
-
+    public DateTime? hire_date { get; set; }
     [Column(TypeName = "timestamp")]
-    public DateTime created_at { get; set; }
-
-    public List<Sale>? Sales { get; set; } = new List<Sale>();
+    public DateTime? created_at { get; set; }
+    public List<Sale> Sales { get; set; } = new List<Sale>();
 }
 
 public class SaleDetail
 {
     [Key]
-    [Required]
-    public int sale_detail_id { get; set; }
-
-    [Required]
+    public required int sale_detail_id { get; set; }
     [ForeignKey("Sale")]
-    public int sale_id { get; set; }
-    public virtual Sale? Sale { get; set; }
-
-    [Required]
+    public required int sale_id { get; set; }
+    public virtual Sale Sale { get; set; }
     [ForeignKey("Product")]
-    public int product_id { get; set; }
-    public virtual Product? Product { get; set; }
-
-    [Required]
+    public required int product_id { get; set; }
+    public virtual Product Product { get; set; }
     public required int quantity { get; set; }
-
-    [Required]
     [Column(TypeName = "decimal(6,2)")]
     public required decimal unit_price { get; set; }
 }
@@ -111,43 +74,27 @@ public class SaleDetail
 public class Product
 {
     [Key]
-    [Required]
-    public int product_id { get; set; }
-
+    public required int product_id { get; set; }
     [MaxLength(30)]
-    [Required]
     public required string product_name { get; set; }
-
     [MaxLength(30)]
     public string? category { get; set; }
-
-    [Required]
     [Column(TypeName = "decimal(6,2)")]
     public required decimal price { get; set; }
-
-    [Required]
     public required int stock_quality { get; set; }
-
     [Column(TypeName = "timestamp")]
-    public DateTime created_at { get; set; }
-
-    public List<SaleDetail>? SaleDetails { get; set; } = new List<SaleDetail>();
+    public DateTime? created_at { get; set; }
+    public List<SaleDetail> SaleDetails { get; set; } = new List<SaleDetail>();
 }
 
 public class Inventory
 {
     [Key]
-    [Required]
-    public int inventory_id { get; set; }
-
-    [Required]
+    public required int inventory_id { get; set; }
     [ForeignKey("Product")]
-    public int product_id { get; set; }
-    public virtual Product? Product { get; set; }
-
-    [Required]
-    public int quantity { get; set; }
-
+    public required int product_id { get; set; }
+    public virtual Product Product { get; set; }
+    public required int quantity { get; set; }
     [Column(TypeName = "timestamp")]
-    public DateTime last_updated { get; set; }
+    public DateTime? last_updated { get; set; }
 }

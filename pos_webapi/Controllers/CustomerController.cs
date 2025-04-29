@@ -33,13 +33,28 @@ public class CustomerController : ControllerBase
     [HttpGet("{id}")]
     public ActionResult<CustomerDetailsDTO> GetSpecificCustomer(int id)
     {
-        var customer = _dbCtx.Customer.Include(c => ).Find(id);
+        var customer = _dbCtx.Customer.Include(c => c.Sales).Where(c => c.customer_id == id).Select(c => c).First();
         if (customer == null)
         {
             return BadRequest("Customer not found");
         }
-
-        return Ok();
+        var customerDetailsDTO = new CustomerDetailsDTO()
+        {
+            CustomerID = customer.customer_id,
+            Email = customer.email,
+            FullName = $"{customer.first_name} {customer.last_name}",
+            PhoneNumber = customer.phone_number,
+        };
+        foreach (var sale in customer.Sales)
+        {
+            customerDetailsDTO.Purchased.Add(new PurchasedDTO()
+            {
+                SaleID = sale.sale_id,
+                SaleDate = sale.sale_date,
+                TotalAmount = sale.total_amount
+            });
+        }
+        return Ok(customerDetailsDTO);
     }
 
     [HttpPost]

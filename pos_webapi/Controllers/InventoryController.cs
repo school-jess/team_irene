@@ -56,31 +56,22 @@ public class InventoryController : ControllerBase
         return CreatedAtAction(nameof(GetAllInventories), new { id = inventory.inventory_id }, inventoryDTO);
     }
 
-    // [HttpPut("{id}")]
-    // public IActionResult Put(int id, InventoryDTO inventory)
-    // {
-    //     if (id != inventory.inventory_id)
-    //     {
-    //         return BadRequest();
-    //     }
-    //     _dbCtx.Entry(inventory).State = EntityState.Modified;
-    //     try
-    //     {
-    //         _dbCtx.SaveChanges();
-    //     }
-    //     catch (DbUpdateException)
-    //     {
-    //         if (!_dbCtx.Inventory.Any(inventory => inventory.inventory_id == id))
-    //         {
-    //             return NotFound();
-    //         }
-    //         else
-    //         {
-    //             throw;
-    //         }
-    //     }
-    //     return NoContent();
-    // }
+    [HttpPut("{id}")]
+    public IActionResult Put(int id, InventoryCreationDTO inventoryCreationDTO)
+    {
+        var inventory = _dbCtx.Inventory.Find(inventoryCreationDTO.InventoryID);
+        if (inventory == null)
+        {
+            return NotFound();
+        }
+        if (id != inventory.inventory_id)
+        {
+            return BadRequest();
+        }
+        _dbCtx.Entry(inventory).State = EntityState.Modified;
+        _dbCtx.SaveChanges();
+        return NoContent();
+    }
 
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)

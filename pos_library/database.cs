@@ -18,19 +18,28 @@ public class DatabaseCtx : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Customer>()
-            .HasIndex(p => p.email)
+        modelBuilder
+            .Entity<Customer>()
+            .Property(c => c.created_at)
+            .HasDefaultValueSql("CURRENT_TIMESTAMP");
+        modelBuilder
+            .Entity<Customer>()
+            .HasIndex(c => c.email)
             .IsUnique(true);
-        modelBuilder.Entity<Sale>()
+        modelBuilder
+            .Entity<Sale>()
             .Property(e => e.sale_date)
             .HasDefaultValueSql("CURRENT_TIMESTAMP");
-        modelBuilder.Entity<Employee>()
+        modelBuilder
+            .Entity<Employee>()
             .Property(e => e.created_at)
             .HasDefaultValueSql("CURRENT_TIMESTAMP");
-        modelBuilder.Entity<Product>()
+        modelBuilder
+            .Entity<Product>()
             .Property(e => e.created_at)
             .HasDefaultValueSql("CURRENT_TIMESTAMP");
-        modelBuilder.Entity<Inventory>()
+        modelBuilder
+            .Entity<Inventory>()
             .Property(e => e.last_updated)
             .HasDefaultValueSql("CURRENT_TIMESTAMP");
         base.OnModelCreating(modelBuilder);
