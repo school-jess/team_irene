@@ -111,5 +111,5 @@ public class InventoryCreationDTO
     public int InventoryID { get; set; }
     public int ProductID { get; set; }
     public int Quantity { get; set; }
-    public DateTime LastUpdated { get; set; }
+    public DateTime? LastUpdated { get; set; }
 }
