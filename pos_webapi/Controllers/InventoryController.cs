@@ -59,7 +59,7 @@ public class InventoryController : ControllerBase
     [HttpPut("{id}")]
     public IActionResult Put(int id, InventoryCreationDTO inventoryCreationDTO)
     {
-        var inventory = _dbCtx.Inventory.Find(inventoryCreationDTO.InventoryID);
+        var inventory = _dbCtx.Inventory.Find(id);
         if (inventory == null)
         {
             return NotFound();

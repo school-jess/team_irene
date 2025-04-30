@@ -68,7 +68,7 @@ public class SaleController : ControllerBase
     [HttpPut("{id}")]
     public IActionResult Put(int id, SaleCreationDTO saleCreationDTO)
     {
-        var sale = _dbCtx.Sale.Find(saleCreationDTO.SaleID);
+        var sale = _dbCtx.Sale.Find(id);
         if (sale == null)
         {
             return NotFound();

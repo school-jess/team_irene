@@ -30,6 +30,22 @@ public class ProductController : ControllerBase
                };
     }
 
+    [HttpGet("{id}")]
+    public ActionResult<ProductDetailsDTO> GetSpecificProducts(int id)
+    {
+        var inventory = _dbCtx.Inventory.Include(i => i.Product).Where(i => i.product_id == id).First();
+        var product = inventory.Product;
+        var productDetailsDTO = new ProductDetailsDTO()
+        {
+            ProductID = product.product_id,
+            Category = product.category,
+            Price = product.price,
+            ProductName = product.product_name,
+            Quantity = inventory.quantity
+        };
+        return Ok(productDetailsDTO);
+    }
+
     [HttpPost]
     public ActionResult<ProductDTO> Post(ProductDTO productDTO)
     {
@@ -50,7 +66,7 @@ public class ProductController : ControllerBase
     [HttpPut("{id}")]
     public IActionResult Put(int id, ProductDTO productDTO)
     {
-        var product = _dbCtx.Product.Find(productDTO.ProductID);
+        var product = _dbCtx.Product.Find(id);
         if (product == null)
         {
             return NotFound();

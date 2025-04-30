@@ -75,7 +75,7 @@ public class EmployeeController : ControllerBase
     [HttpPut("{id}")]
     public IActionResult Put(int id, EmployeeDTO employeeDTO)
     {
-        var employee = _dbCtx.Employee.Find(employeeDTO.EmployeeID);
+        var employee = _dbCtx.Employee.Find(id);
         if (employee == null)
         {
             return NotFound();

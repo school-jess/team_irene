@@ -89,6 +89,15 @@ public class ProductDTO
     public DateTime? CreatedAt { get; set; }
 }
 
+public class ProductDetailsDTO
+{
+    public int ProductID { get; set; }
+    public required string ProductName { get; set; }
+    public string? Category { get; set; }
+    public required decimal Price { get; set; }
+    public int Quantity { get; set; }
+}
+
 public class InventoryDTO
 {
     public int InventoryID { get; set; }

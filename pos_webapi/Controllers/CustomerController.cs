@@ -77,7 +77,7 @@ public class CustomerController : ControllerBase
     [HttpPut("{id}")]
     public IActionResult Put(int id, CustomerDTO customerDTO)
     {
-        var customer = _dbCtx.Customer.Find(customerDTO.CustomerID);
+        var customer = _dbCtx.Customer.Find(id);
         if (customer == null)
         {
             return NotFound();
