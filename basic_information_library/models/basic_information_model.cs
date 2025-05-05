@@ -1,7 +1,10 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace basic_information_library.models;
 
 public class BasicInformation
 {
+    [Key]
     public int id { get; set; }
 
     public string first_name
